@@ -1,0 +1,322 @@
+<!--
+FILE: calculate-monthly-dividend-income.html
+NOTE: Comments in this file are for YOU only. They do NOT show on the page.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- SECURITY: CSP + anti-clickjacking (frame-ancestors) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="
+          default-src 'self';
+          script-src 'self';
+          style-src 'self' 'unsafe-inline';
+          img-src 'self' data:;
+          connect-src 'self';
+          base-uri 'none';
+          form-action 'none';
+          frame-ancestors 'none';
+        ">
+
+  <title>Calculate Monthly Dividend Income (CAD & USD)</title>
+  <meta name="description" content="Calculate monthly dividend income from investment amount and dividend yield. Includes annual income and payout-per-period estimates. Works for CAD & USD." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://nimrat1000.github.io/dividend-income-calculator/calculate-monthly-dividend-income.html" />
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.14);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --shadow: 0 14px 40px rgba(0,0,0,0.35);
+      --r: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(92,124,250,0.22), transparent 60%),
+        radial-gradient(1100px 600px at 80% 20%, rgba(25,195,125,0.16), transparent 55%),
+        radial-gradient(900px 600px at 55% 90%, rgba(255,204,102,0.12), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    a{color:inherit}
+    .wrap{width:min(980px,92vw);margin:34px auto 70px}
+    .top{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px
+    }
+    .brand{
+      display:flex;gap:10px;align-items:center;padding:10px 12px;
+      background:rgba(255,255,255,0.04);border:1px solid var(--border);
+      border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px);
+    }
+    .btn{
+      display:inline-block;text-decoration:none;border:1px solid rgba(255,255,255,0.18);
+      background:rgba(92,124,250,0.22);padding:10px 12px;border-radius:12px;
+      box-shadow:0 12px 30px rgba(0,0,0,0.25);transition:120ms ease;font-size:13.5px;white-space:nowrap
+    }
+    .btn:hover{background:rgba(92,124,250,0.28)}
+    .card{
+      background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+      box-shadow:var(--shadow);backdrop-filter: blur(14px);overflow:hidden
+    }
+    header{padding:20px 18px}
+    h1{margin:0;font-size:clamp(26px,3vw,40px);letter-spacing:-0.02em}
+    .sub{margin:10px 0 0;color:var(--muted);max-width:80ch}
+    .grid{display:grid;grid-template-columns:1fr .72fr;gap:16px;margin-top:16px}
+    @media(max-width:920px){.grid{grid-template-columns:1fr}}
+    .content{padding:16px 18px 18px}
+    h2{margin:0 0 10px;font-size:18px;letter-spacing:-0.01em}
+    .muted{color:var(--muted)}
+    .callout{
+      background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);
+      border-radius:16px;padding:12px;margin:12px 0
+    }
+    label{display:block;font-size:12.5px;color:rgba(255,255,255,0.76);margin:10px 0 6px}
+    input,select{
+      width:100%;padding:11px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.18);
+      background:rgba(0,0,0,0.22);color:var(--text);outline:none
+    }
+    input:focus,select:focus{border-color:rgba(92,124,250,0.6)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media(max-width:560px){.row{grid-template-columns:1fr}}
+    .kpi{display:grid;gap:10px;margin-top:10px}
+    .k{
+      padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,0.12);
+      background:rgba(0,0,0,0.18)
+    }
+    .k b{display:block;font-size:12.5px;color:rgba(255,255,255,0.72);margin-bottom:6px}
+    .k span{font-size:20px;letter-spacing:-0.01em}
+    details{
+      border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);
+      border-radius:14px;padding:10px 12px;margin-top:10px
+    }
+    summary{cursor:pointer;font-weight:650;list-style:none}
+    summary::-webkit-details-marker{display:none}
+    footer{margin-top:18px;text-align:center;color:rgba(255,255,255,0.55);font-size:12.5px}
+    .sticky{position:sticky;top:14px}
+    ul{margin:10px 0 0 18px;color:rgba(255,255,255,0.88)}
+    li{margin:6px 0}
+    .hint{font-size:12.5px;color:rgba(255,255,255,0.68);margin-top:8px}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <strong>Dividend Income Tools</strong>
+        <span class="muted" style="font-size:12.5px;">US & Canada</span>
+      </div>
+      <a class="btn" href="index.html">Open Main Dividend Income Calculator</a>
+    </div>
+
+    <div class="card">
+      <header>
+        <h1>Calculate Monthly Dividend Income</h1>
+        <p class="sub">
+          Enter your investment amount and annual dividend yield to estimate monthly and annual dividend income in CAD or USD.
+        </p>
+      </header>
+    </div>
+
+    <div class="grid">
+      <main class="card">
+        <div class="content">
+          <h2>Dividend income estimator</h2>
+
+          <div class="callout">
+            <p class="muted" style="margin:0;">
+              Formula: <strong>Annual Income</strong> = Investment × (Yield ÷ 100) → <strong>Monthly</strong> = Annual ÷ 12
+            </p>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="currency">Currency</label>
+              <select id="currency">
+                <option value="CAD">CAD</option>
+                <option value="USD">USD</option>
+              </select>
+              <div class="hint">Tip: Match this to your investment currency.</div>
+            </div>
+
+            <div>
+              <label for="investment">Investment amount</label>
+              <input id="investment" type="number" inputmode="decimal" min="0" step="0.01" value="10000" />
+              <div class="hint">Accepted range: 0 to 1,000,000,000</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="yield">Dividend yield (annual %)</label>
+              <input id="yield" type="number" inputmode="decimal" min="0" step="0.01" value="5" />
+              <div class="hint">Accepted range: 0% to 100%</div>
+            </div>
+
+            <div>
+              <label for="freq">Payout frequency (for display)</label>
+              <select id="freq">
+                <option value="monthly">Monthly</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="semiannual">Semi-Annual</option>
+                <option value="annual">Annual</option>
+              </select>
+              <div class="hint">Your yearly total stays the same; timing changes.</div>
+            </div>
+          </div>
+
+          <div class="kpi">
+            <div class="k">
+              <b>Estimated monthly dividend income</b>
+              <span id="monthlyIncome">—</span>
+            </div>
+            <div class="k">
+              <b>Estimated annual dividend income</b>
+              <span id="annualIncome">—</span>
+            </div>
+            <div class="k">
+              <b>Estimated payout per period</b>
+              <span id="perPeriod">—</span>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>Related calculators</strong>
+            <p class="muted" style="margin:8px 0 0;">
+              To calculate yield from income, use the
+              <a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a>.
+              For advanced planning (DRIP, growth, optional tax), use the
+              <a href="index.html">Main Dividend Income Calculator</a>.
+            </p>
+          </div>
+
+          <h2>FAQ</h2>
+
+          <details open>
+            <summary>Why is yield annual if I want monthly income?</summary>
+            <p class="muted" style="margin:10px 0 0;">
+              Yield is usually quoted per year. This tool calculates annual income first, then divides by 12 for a monthly estimate.
+              If an investment pays quarterly, you may receive larger payments four times a year, but the yearly total is what the yield represents.
+            </p>
+          </details>
+
+          <details>
+            <summary>Does this include dividend growth or DRIP?</summary>
+            <p class="muted" style="margin:10px 0 0;">
+              No—this page is a quick estimator. If you want growth and reinvestment modeling, use the main calculator.
+            </p>
+          </details>
+
+          <details>
+            <summary>How much do I need for $1,000/month?</summary>
+            <p class="muted" style="margin:10px 0 0;">
+              See: <a href="how-much-to-invest-for-1000-monthly-dividends.html">How Much to Invest for $1,000 Monthly Dividends</a>.
+            </p>
+          </details>
+
+          <!-- ROADMAP: Add a $500 and $2,000 goal guide links here once those pages are live. -->
+        </div>
+      </main>
+
+      <aside class="card sticky">
+        <div class="content">
+          <h2>Quick navigation</h2>
+          <ul class="muted">
+            <li><a href="index.html">Main Dividend Income Calculator</a></li>
+            <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li>
+            <li><a href="how-much-to-invest-for-1000-monthly-dividends.html">How Much to Invest for $1,000/Month</a></li>
+          </ul>
+
+          <!-- ROADMAP: When Dividend Growth Calculator is live, add it to this list. -->
+          <!-- ROADMAP: When DRIP (monthly contributions) page is live, add it to this list. -->
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Educational estimates only. Dividend yields and payouts can change.
+    </footer>
+  </div>
+
+  <script>
+    // SECURITY/Reliability: strict numeric parsing + clamping to prevent UI abuse and NaN issues.
+    function safeNumber(value) {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : 0;
+    }
+    function clamp(n, min, max) {
+      return Math.min(Math.max(n, min), max);
+    }
+    function fmtMoney(cur, n) {
+      if (!Number.isFinite(n)) return '—';
+      return new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency: cur,
+        maximumFractionDigits: 2
+      }).format(n);
+    }
+    function periodsPerYear(f) {
+      if (f === 'monthly') return 12;
+      if (f === 'quarterly') return 4;
+      if (f === 'semiannual') return 2;
+      return 1;
+    }
+
+    const currencyEl = document.getElementById('currency');
+    const investmentEl = document.getElementById('investment');
+    const yieldEl = document.getElementById('yield');
+    const freqEl = document.getElementById('freq');
+
+    const monthlyIncomeOut = document.getElementById('monthlyIncome');
+    const annualIncomeOut = document.getElementById('annualIncome');
+    const perPeriodOut = document.getElementById('perPeriod');
+
+    function calc() {
+      const cur = currencyEl.value;
+
+      const invRaw = safeNumber(investmentEl.value);
+      const yRaw = safeNumber(yieldEl.value);
+
+      const inv = clamp(invRaw, 0, 1_000_000_000); // 0 to 1B
+      const y = clamp(yRaw, 0, 100);              // 0% to 100%
+
+      // Keep inputs normalized (prevents weird states if user pastes huge numbers)
+      if (String(inv) !== investmentEl.value && investmentEl === document.activeElement) {
+        // do nothing while typing
+      } else {
+        investmentEl.value = inv.toFixed(2);
+      }
+      if (String(y) !== yieldEl.value && yieldEl === document.activeElement) {
+        // do nothing while typing
+      } else {
+        yieldEl.value = y.toFixed(2);
+      }
+
+      const annual = inv * (y / 100);
+      const monthly = annual / 12;
+
+      const ppy = periodsPerYear(freqEl.value);
+      const perPeriod = annual / ppy;
+
+      // SECURITY: Output uses textContent only (prevents XSS).
+      monthlyIncomeOut.textContent = fmtMoney(cur, monthly);
+      annualIncomeOut.textContent = fmtMoney(cur, annual);
+      perPeriodOut.textContent = `${fmtMoney(cur, perPeriod)} (${freqEl.value})`;
+    }
+
+    [currencyEl, investmentEl, yieldEl, freqEl].forEach(el => el.addEventListener('input', calc));
+    calc();
+  </script>
+</body>
+</html>
