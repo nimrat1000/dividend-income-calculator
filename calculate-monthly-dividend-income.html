@@ -256,32 +256,31 @@ button.btn:active{transform:translateY(1px)}
     <footer>
       Educational estimates only. Dividend yields and payouts can change.
     </footer>
-  </div>
+  </div><script>
+  // SECURITY/Reliability: strict numeric parsing + clamping to prevent UI abuse and NaN issues.
+  function safeNumber(value) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : 0;
+  }
+  function clamp(n, min, max) {
+    return Math.min(Math.max(n, min), max);
+  }
+  function fmtMoney(cur, n) {
+    if (!Number.isFinite(n)) return '—';
+    return new Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency: cur,
+      maximumFractionDigits: 2
+    }).format(n);
+  }
+  function periodsPerYear(f) {
+    if (f === 'monthly') return 12;
+    if (f === 'quarterly') return 4;
+    if (f === 'semiannual') return 2;
+    return 1;
+  }
 
-  <script>
-    // SECURITY/Reliability: strict numeric parsing + clamping to prevent UI abuse and NaN issues.
-    function safeNumber(value) {
-      const n = Number(value);
-      return Number.isFinite(n) ? n : 0;
-    }
-    function clamp(n, min, max) {
-      return Math.min(Math.max(n, min), max);
-    }
-    function fmtMoney(cur, n) {
-      if (!Number.isFinite(n)) return '—';
-      return new Intl.NumberFormat(undefined, {
-        style: 'currency',
-        currency: cur,
-        maximumFractionDigits: 2
-      }).format(n);
-    }
-    function periodsPerYear(f) {
-      if (f === 'monthly') return 12;
-      if (f === 'quarterly') return 4;
-      if (f === 'semiannual') return 2;
-      return 1;
-    }
-
+  document.addEventListener('DOMContentLoaded', () => {
     const currencyEl = document.getElementById('currency');
     const investmentEl = document.getElementById('investment');
     const yieldEl = document.getElementById('yield');
@@ -291,26 +290,13 @@ button.btn:active{transform:translateY(1px)}
     const annualIncomeOut = document.getElementById('annualIncome');
     const perPeriodOut = document.getElementById('perPeriod');
 
+    const calcBtn = document.getElementById('calcBtn');
+
     function calc() {
       const cur = currencyEl.value;
 
-      const invRaw = safeNumber(investmentEl.value);
-      const yRaw = safeNumber(yieldEl.value);
-
-      const inv = clamp(invRaw, 0, 1_000_000_000); // 0 to 1B
-      const y = clamp(yRaw, 0, 100);              // 0% to 100%
-
-      // Keep inputs normalized (prevents weird states if user pastes huge numbers)
-      if (String(inv) !== investmentEl.value && investmentEl === document.activeElement) {
-        // do nothing while typing
-      } else {
-        investmentEl.value = inv.toFixed(2);
-      }
-      if (String(y) !== yieldEl.value && yieldEl === document.activeElement) {
-        // do nothing while typing
-      } else {
-        yieldEl.value = y.toFixed(2);
-      }
+      const inv = clamp(safeNumber(investmentEl.value), 0, 1_000_000_000);
+      const y = clamp(safeNumber(yieldEl.value), 0, 100);
 
       const annual = inv * (y / 100);
       const monthly = annual / 12;
@@ -324,8 +310,16 @@ button.btn:active{transform:translateY(1px)}
       perPeriodOut.textContent = `${fmtMoney(cur, perPeriod)} (${freqEl.value})`;
     }
 
+    // Auto-calc on input
     [currencyEl, investmentEl, yieldEl, freqEl].forEach(el => el.addEventListener('input', calc));
+
+    // Manual button calc
+    if (calcBtn) calcBtn.addEventListener('click', calc);
+
+    // Show results on first load
     calc();
-  </script>
+  });
+</script>
+
 </body>
 </html>
