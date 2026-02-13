@@ -9,17 +9,17 @@ NOTE: Comments in this file are for YOU only. They do NOT show on the page.
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
   <!-- SECURITY: CSP + anti-clickjacking (frame-ancestors) -->
-  <meta http-equiv="Content-Security-Policy"
-        content="
-          default-src 'self';
-          script-src 'self';
-          style-src 'self' 'unsafe-inline';
-          img-src 'self' data:;
-          connect-src 'self';
-          base-uri 'none';
-          form-action 'none';
-          frame-ancestors 'none';
-        ">
+ <meta http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        connect-src 'self';
+        base-uri 'none';
+        form-action 'none';
+        frame-ancestors 'none';
+      ">
 
   <title>Calculate Monthly Dividend Income (CAD & USD)</title>
   <meta name="description" content="Calculate monthly dividend income from investment amount and dividend yield. Includes annual income and payout-per-period estimates. Works for CAD & USD." />
@@ -59,6 +59,9 @@ NOTE: Comments in this file are for YOU only. They do NOT show on the page.
       border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,0.25);
       backdrop-filter: blur(10px);
     }
+    button.btn{cursor:pointer}
+button.btn:active{transform:translateY(1px)}
+
     .btn{
       display:inline-block;text-decoration:none;border:1px solid rgba(255,255,255,0.18);
       background:rgba(92,124,250,0.22);padding:10px 12px;border-radius:12px;
@@ -181,6 +184,12 @@ NOTE: Comments in this file are for YOU only. They do NOT show on the page.
               <b>Estimated monthly dividend income</b>
               <span id="monthlyIncome">—</span>
             </div>
+            <!-- UI: Calculate button (keeps it obvious for users) -->
+<div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+  <button id="calcBtn" class="btn" type="button">Calculate</button>
+  <a class="btn" href="index.html">Advanced Calculator</a>
+</div>
+
             <div class="k">
               <b>Estimated annual dividend income</b>
               <span id="annualIncome">—</span>
