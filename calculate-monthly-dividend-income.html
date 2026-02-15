@@ -250,6 +250,9 @@ button.btn:active{transform:translateY(1px)}
 <div class="content">
   <h2>Quick navigation</h2>
   <ul class="muted">
+    <!-- QUICK NAV INCLUDE (shared) -->
+<div id="quickNav"></div>
+
     <li><a href="index.html">Main Dividend Income Calculator</a></li>
     <li><a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a></li>
     <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li>
@@ -328,6 +331,29 @@ button.btn:active{transform:translateY(1px)}
 
     // Show results on first load
     calc();
+  });
+</script>
+<script>
+  // Shared Quick Nav loader
+  document.addEventListener('DOMContentLoaded', async () => {
+    const host = document.getElementById('quickNav');
+    if (!host) return;
+
+    try {
+      const res = await fetch('partials/quick-nav.html', { cache: 'no-cache' });
+      if (!res.ok) throw new Error('Nav load failed: ' + res.status);
+      host.innerHTML = await res.text();
+    } catch (e) {
+      // Fallback (no visible error, but keeps page usable)
+      host.innerHTML = `
+        <div class="content">
+          <h2>Quick navigation</h2>
+          <ul class="muted">
+            <li><a href="index.html">Main Dividend Income Calculator</a></li>
+          </ul>
+        </div>
+      `;
+    }
   });
 </script>
 
