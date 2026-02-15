@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
   <!-- SECURITY: CSP + anti-clickjacking (frame-ancestors)
-       NOTE: We allow inline scripts because this site uses inline JS on static GitHub Pages.
+       NOTE: Inline scripts allowed because static GitHub Pages uses inline JS here.
        ROADMAP: If you later move JS into separate .js files, remove 'unsafe-inline' and update script-src accordingly. -->
   <meta http-equiv="Content-Security-Policy"
         content="
@@ -25,13 +25,6 @@
   <link rel="canonical" href="https://nimrat1000.github.io/dividend-income-calculator/calculate-monthly-dividend-income.html" />
 
   <style>
-    /* QUICK NAV standard styling */
-    aside .content h2 { margin-bottom: 10px; }
-    aside ul { margin: 10px 0 0 18px; padding: 0; }
-    aside li { margin: 6px 0; }
-    aside a { text-decoration: none; }
-    aside a:hover { text-decoration: underline; }
-
     :root{
       --bg:#0b1020;
       --card: rgba(255,255,255,0.06);
@@ -54,65 +47,76 @@
       line-height:1.55;
     }
     a{color:inherit}
+
     .wrap{width:min(980px,92vw);margin:34px auto 70px}
-    .top{
-      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px
-    }
+    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
     .brand{
       display:flex;gap:10px;align-items:center;padding:10px 12px;
-      background:rgba(255,255,255,0.04);border:1px solid var(--border);
-      border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,0.25);
+      background:rgba(255,255,255,0.04);
+      border:1px solid var(--border);
+      border-radius:999px;
+      box-shadow:0 8px 22px rgba(0,0,0,0.25);
       backdrop-filter: blur(10px);
     }
 
     .btn{
-      display:inline-block;text-decoration:none;border:1px solid rgba(255,255,255,0.18);
-      background:rgba(92,124,250,0.22);padding:10px 12px;border-radius:12px;
-      box-shadow:0 12px 30px rgba(0,0,0,0.25);transition:120ms ease;font-size:13.5px;white-space:nowrap
+      display:inline-block;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,0.18);
+      background:rgba(92,124,250,0.22);
+      padding:10px 12px;
+      border-radius:12px;
+      box-shadow:0 12px 30px rgba(0,0,0,0.25);
+      transition:120ms ease;
+      font-size:13.5px;
+      white-space:nowrap;
     }
     .btn:hover{background:rgba(92,124,250,0.28)}
     button.btn{cursor:pointer}
     button.btn:active{transform:translateY(1px)}
 
     .card{
-      background:var(--card);border:1px solid var(--border);border-radius:var(--r);
-      box-shadow:var(--shadow);backdrop-filter: blur(14px);overflow:hidden
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(14px);
+      overflow:hidden;
     }
     header{padding:20px 18px}
     h1{margin:0;font-size:clamp(26px,3vw,40px);letter-spacing:-0.02em}
     .sub{margin:10px 0 0;color:var(--muted);max-width:80ch}
+
     .grid{display:grid;grid-template-columns:1fr .72fr;gap:16px;margin-top:16px}
     @media(max-width:920px){.grid{grid-template-columns:1fr}}
+
     .content{padding:16px 18px 18px}
     h2{margin:0 0 10px;font-size:18px;letter-spacing:-0.01em}
     .muted{color:var(--muted)}
+
     .callout{
-      background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);
-      border-radius:16px;padding:12px;margin:12px 0
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:16px;
+      padding:12px;
+      margin:12px 0;
     }
+
     label{display:block;font-size:12.5px;color:rgba(255,255,255,0.76);margin:10px 0 6px}
     input,select{
-      width:100%;padding:11px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.18);
-      background:rgba(0,0,0,0.22);color:var(--text);outline:none
+      width:100%;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.18);
+      background:rgba(0,0,0,0.22);
+      color:var(--text);
+      outline:none;
     }
     input:focus,select:focus{border-color:rgba(92,124,250,0.6)}
+
     .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media(max-width:560px){.row{grid-template-columns:1fr}}
-    .kpi{display:grid;gap:10px;margin-top:12px}
-    .k{
-      padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,0.12);
-      background:rgba(0,0,0,0.18)
-    }
-    .k b{display:block;font-size:12.5px;color:rgba(255,255,255,0.72);margin-bottom:6px}
-    .k span{font-size:20px;letter-spacing:-0.01em}
-    details{
-      border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);
-      border-radius:14px;padding:10px 12px;margin-top:10px
-    }
-    summary{cursor:pointer;font-weight:650;list-style:none}
-    summary::-webkit-details-marker{display:none}
-    footer{margin-top:18px;text-align:center;color:rgba(255,255,255,0.55);font-size:12.5px}
-    .sticky{position:sticky;top:14px}
+
     .hint{font-size:12.5px;color:rgba(255,255,255,0.68);margin-top:8px}
 
     .actions{
@@ -122,6 +126,41 @@
       flex-wrap:wrap;
       align-items:center;
     }
+
+    .kpi{display:grid;gap:10px;margin-top:12px}
+    .k{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(0,0,0,0.18);
+    }
+    .k b{display:block;font-size:12.5px;color:rgba(255,255,255,0.72);margin-bottom:6px}
+    .k span{font-size:20px;letter-spacing:-0.01em}
+
+    details{
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.04);
+      border-radius:14px;
+      padding:10px 12px;
+      margin-top:10px;
+    }
+    summary{cursor:pointer;font-weight:650;list-style:none}
+    summary::-webkit-details-marker{display:none}
+
+    footer{margin-top:18px;text-align:center;color:rgba(255,255,255,0.55);font-size:12.5px}
+
+    .sticky{position:sticky;top:14px}
+
+    /* QUICK NAV standard styling (works for partial content too) */
+    aside .content h2 { margin-bottom: 10px; }
+    aside ul { margin: 10px 0 0 18px; padding: 0; }
+    aside li { margin: 6px 0; }
+    aside a { text-decoration: none; }
+    aside a:hover { text-decoration: underline; }
+
+    /* If the partial includes its own UL, keep it consistent */
+    #quickNav ul { margin: 10px 0 0 18px; padding: 0; }
+    #quickNav li { margin: 6px 0; }
   </style>
 </head>
 
@@ -250,8 +289,11 @@
       </main>
 
       <aside class="card sticky">
-        <!-- QUICK NAV INCLUDE (shared): loads from partials/quick-nav.html -->
-        <div id="quickNav"></div>
+        <div class="content">
+          <h2>Quick navigation</h2>
+          <!-- QUICK NAV INCLUDE (shared): loads from partials/quick-nav.html -->
+          <div id="quickNav"></div>
+        </div>
       </aside>
     </div>
 
@@ -327,4 +369,24 @@
 
   <script>
     // Shared Quick Nav loader (single source of truth)
-    // ROADMAP: If you later add a build system (Jekyll/layout
+    document.addEventListener('DOMContentLoaded', async () => {
+      const host = document.getElementById('quickNav');
+      if (!host) return;
+
+      try {
+        const res = await fetch('partials/quick-nav.html', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('Nav load failed: ' + res.status);
+        host.innerHTML = await res.text();
+      } catch (e) {
+        host.innerHTML = `
+          <ul class="muted">
+            <li><a href="index.html">Main Dividend Income Calculator</a></li>
+            <li><a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a></li>
+            <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li>
+          </ul>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
