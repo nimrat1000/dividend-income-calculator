@@ -10,18 +10,21 @@
   <meta name="description" content="Estimate your monthly and annual dividend income with this free dividend income calculator for US and Canadian investors. Simple, fast, accurate, with optional advanced planning." />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://nimrat1000.github.io/dividend-income-calculator/" />
- <!-- SECURITY: CSP + anti-clickjacking (frame-ancestors) -->
- <meta http-equiv="Content-Security-Policy"
-      content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline';
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' data:;
-        connect-src 'self';
-        base-uri 'none';
-        form-action 'none';
-        frame-ancestors 'none';
-      ">
+
+  <!-- SECURITY: CSP + anti-clickjacking (frame-ancestors)
+       NOTE: Inline scripts are allowed because this is a static GitHub Pages site using inline JS. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="
+          default-src 'self';
+          script-src 'self' 'unsafe-inline';
+          style-src 'self' 'unsafe-inline';
+          img-src 'self' data:;
+          connect-src 'self';
+          base-uri 'none';
+          form-action 'none';
+          frame-ancestors 'none';
+        ">
+
   <!-- Open Graph (optional but nice) -->
   <meta property="og:title" content="Monthly Dividend Income Calculator (US & Canada)" />
   <meta property="og:description" content="Calculate monthly & annual dividend income. Simple mode + advanced planning options (DRIP, growth, contributions)." />
@@ -289,9 +292,7 @@
       border-color: rgba(92,124,250,0.35);
     }
     .btn.primary:hover{background: rgba(92,124,250,0.28);}
-    .btn.ghost{
-      background: transparent;
-    }
+    .btn.ghost{background: transparent;}
     .badge{
       font-size: 12px;
       color: rgba(255,255,255,0.85);
@@ -402,6 +403,13 @@
       font-size: 12.5px;
       color: var(--muted);
     }
+
+    /* QUICK NAV standard styling (applies to partial content too) */
+    #quickNav h2 { margin: 18px 0 10px; font-size: 16px; letter-spacing: -0.01em; }
+    #quickNav ul { margin: 10px 0 0 18px; padding: 0; }
+    #quickNav li { margin: 6px 0; }
+    #quickNav a { text-decoration: none; }
+    #quickNav a:hover { text-decoration: underline; }
   </style>
 </head>
 
@@ -584,17 +592,19 @@
             Your results show an estimated <strong>monthly dividend income</strong> and <strong>annual dividend income</strong> based on your inputs.
             These are estimates and assume the dividend yield remains stable. Actual dividends can change with market conditions and dividend policy.
           </p>
+
           <div class="callout" style="margin-top:14px;">
-  <strong>Planning tip:</strong>
-  <p class="muted" style="margin:8px 0 0;">
-    Trying to reach a specific income goal?
-    Read our detailed guide on
-    <a href="how-much-to-invest-for-1000-monthly-dividends.html">
-      how much you need to invest to earn $1,000 per month in dividends
-    </a>.
-  </p>
-</div>
-    <div class="tableWrap" id="tableWrap" style="display:none;">
+            <strong>Planning tip:</strong>
+            <p class="muted" style="margin:8px 0 0;">
+              Trying to reach a specific income goal?
+              Read our detailed guide on
+              <a href="how-much-to-invest-for-1000-monthly-dividends.html">
+                how much you need to invest to earn $1,000 per month in dividends
+              </a>.
+            </p>
+          </div>
+
+          <div class="tableWrap" id="tableWrap" style="display:none;">
             <table aria-label="Year-by-Year Simulation">
               <thead>
                 <tr>
@@ -619,15 +629,14 @@
       </section>
 
       <!-- =========================
-           RIGHT: EXPLANATION + FAQ
+           RIGHT: EXPLANATION + FAQ + RELATED + QUICK NAV (STANDARD)
       ========================== -->
       <aside class="card" aria-label="Guide & FAQs">
         <div class="cardHead">
           <h2>How it Works</h2>
-          <span class="tiny">
-           <!-- SEO-friendly explanation -->
-          </span>
+          <span class="tiny"></span>
         </div>
+
         <div class="content">
           <p class="sub" style="margin-top:0;">
             Dividend income is generated when companies or funds distribute a portion of profits to investors.
@@ -674,6 +683,8 @@
             <p>
               $1,000/month is $12,000/year. Required investment ≈ $12,000 ÷ (yield as a decimal).
               Example: 6% yield → $12,000 ÷ 0.06 = $200,000.
+              Full guide:
+              <a href="how-much-to-invest-for-1000-monthly-dividends.html">How Much to Invest for $1,000/Month</a>.
             </p>
           </details>
 
@@ -700,30 +711,21 @@
               if you reinvest everything.
             </p>
           </details>
-          <details>
-  <summary>How much should I invest to earn $1,000 per month in dividends?</summary>
-  <p>
-    We explain this in detail in our guide:
-    <a href="how-much-to-invest-for-1000-monthly-dividends.html">
-      How Much to Invest for $1,000 Monthly Dividends
-    </a>
-  </p>
-</details>
-<h2>Related Dividend Calculators</h2>
-<p>
-Use these calculators to explore dividend yield and income scenarios in more detail:
-</p>
-<ul>
-  <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li> 
-  <!--<li><a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a></li>-->
-  <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li>
-  <!-- QUICK NAV INCLUDE (shared) -->
-<div id="quickNav"></div>
 
-</ul>
+          <h2 style="margin:18px 0 10px; font-size:16px;">Related Dividend Calculators</h2>
+          <p class="sub" style="margin-top:0;">
+            Use these calculators to explore dividend yield and income scenarios in more detail:
+          </p>
+          <ul style="margin:10px 0 0 18px; padding:0;">
+            <li><a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a></li>
+            <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li>
+            <li><a href="how-much-to-invest-for-1000-monthly-dividends.html">How Much to Invest for $1,000/Month</a></li>
+          </ul>
 
+          <!-- QUICK NAV INCLUDE (shared): Must be OUTSIDE any <ul> -->
+          <div id="quickNav" style="margin-top:16px;"></div>
 
-        
+          <!-- ROADMAP: Add Project 3 pages to partials/quick-nav.html (single source of truth). -->
         </div>
       </aside>
     </div>
@@ -733,362 +735,328 @@ Use these calculators to explore dividend yield and income scenarios in more det
     </footer>
   </div>
 
-<script>
-/* =========================
-   Helpers
-========================= */
-function toNumber(val){
-  if(val === null || val === undefined) return 0;
-  const s = String(val).replace(/[^0-9.-]/g,'');
-  const n = Number(s);
-  return isFinite(n) ? n : 0;
-}
-function formatMoney(n, currency){
-  const sign = n < 0 ? "-" : "";
-  const abs = Math.abs(n);
-  // If user runs this offline, Intl exists in modern browsers.
-  const cur = currency === "CAD" ? "CAD" : "USD";
-  try{
-    return sign + new Intl.NumberFormat(undefined, { style:"currency", currency: cur, maximumFractionDigits: 2 }).format(abs);
-  }catch(e){
-    return sign + (cur === "CAD" ? "C$" : "$") + abs.toFixed(2);
-  }
-}
-function formatPct(n){
-  if(!isFinite(n)) return "—";
-  return n.toFixed(2) + "%";
-}
-function freqDivisor(freq){
-  switch(freq){
-    case "monthly": return 12;
-    case "quarterly": return 4;
-    case "semiannual": return 2;
-    case "annual": return 1;
-    default: return 4;
-  }
-}
-
-/* =========================
-   State
-========================= */
-let state = {
-  mode: "simple",       // simple | advanced
-  currency: "USD",      // USD | CAD
-  view: "estimate"      // estimate | goal
-};
-
-/* =========================
-   Elements
-========================= */
-const el = {
-  modeSimple: document.getElementById("modeSimple"),
-  modeAdvanced: document.getElementById("modeAdvanced"),
-  curUSD: document.getElementById("curUSD"),
-  curCAD: document.getElementById("curCAD"),
-  viewEstimate: document.getElementById("viewEstimate"),
-  viewGoal: document.getElementById("viewGoal"),
-  badge: document.getElementById("badgeContext"),
-
-  investment: document.getElementById("investment"),
-  goalMonthly: document.getElementById("goalMonthly"),
-  yieldPct: document.getElementById("yieldPct"),
-  frequency: document.getElementById("frequency"),
-  goalField: document.getElementById("goalField"),
-
-  advancedPanel: document.getElementById("advancedPanel"),
-  drip: document.getElementById("drip"),
-  years: document.getElementById("years"),
-  divGrowth: document.getElementById("divGrowth"),
-  annualAdd: document.getElementById("annualAdd"),
-  taxRate: document.getElementById("taxRate"),
-  showTable: document.getElementById("showTable"),
-
-  btnCalculate: document.getElementById("btnCalculate"),
-  btnReset: document.getElementById("btnReset"),
-
-  monthlyOut: document.getElementById("monthlyOut"),
-  annualOut: document.getElementById("annualOut"),
-  payOut: document.getElementById("payOut"),
-  needOut: document.getElementById("needOut"),
-
-  r4Label: document.getElementById("r4Label"),
-  needNote: document.getElementById("needNote"),
-
-  tableWrap: document.getElementById("tableWrap"),
-  simBody: document.getElementById("simBody"),
-};
-
-/* =========================
-   UI Toggles
-========================= */
-function setActive(segButtons, activeBtn){
-  segButtons.forEach(b => b.classList.remove("active"));
-  activeBtn.classList.add("active");
-}
-function updateBadge(){
-  const m = state.mode === "advanced" ? "Advanced" : "Simple";
-  const v = state.view === "goal" ? "Goal" : "Estimate";
-  el.badge.textContent = `${m} • ${v} • ${state.currency}`;
-}
-function setMode(mode){
-  state.mode = mode;
-  setActive([el.modeSimple, el.modeAdvanced], mode === "simple" ? el.modeSimple : el.modeAdvanced);
-  el.modeSimple.setAttribute("aria-selected", mode === "simple" ? "true" : "false");
-  el.modeAdvanced.setAttribute("aria-selected", mode === "advanced" ? "true" : "false");
-
-  if(mode === "advanced") el.advancedPanel.classList.add("on");
-  else el.advancedPanel.classList.remove("on");
-
-  updateBadge();
-  calculate();
-}
-function setCurrency(cur){
-  state.currency = cur;
-  setActive([el.curUSD, el.curCAD], cur === "USD" ? el.curUSD : el.curCAD);
-  el.curUSD.setAttribute("aria-selected", cur === "USD" ? "true" : "false");
-  el.curCAD.setAttribute("aria-selected", cur === "CAD" ? "true" : "false");
-  updateBadge();
-  calculate();
-}
-function setView(view){
-  state.view = view;
-  setActive([el.viewEstimate, el.viewGoal], view === "estimate" ? el.viewEstimate : el.viewGoal);
-  el.viewEstimate.setAttribute("aria-selected", view === "estimate" ? "true" : "false");
-  el.viewGoal.setAttribute("aria-selected", view === "goal" ? "true" : "false");
-
-  el.goalField.style.display = (view === "goal") ? "block" : "none";
-  // When goal view is ON, investment can still be used for estimating, but "needed" will be highlighted.
-  el.r4Label.textContent = view === "goal" ? "Investment Needed for Your Goal" : "Investment Needed for Your Goal";
-  el.needNote.textContent = view === "goal" ? "Calculated from goal, yield, frequency." : "Only shown in Goal view.";
-  updateBadge();
-  calculate();
-}
-
-/* =========================
-   Core Calculations
-========================= */
-function baseIncomeFromInvestment(investment, yieldPct){
-  const y = Math.max(0, yieldPct) / 100;
-  const annual = investment * y;
-  const monthly = annual / 12;
-  return { annual, monthly };
-}
-
-function investmentNeededForGoal(goalMonthly, yieldPct){
-  const y = Math.max(0, yieldPct) / 100;
-  if(y <= 0) return Infinity;
-  const annualGoal = goalMonthly * 12;
-  return annualGoal / y;
-}
-
-/**
- * Advanced simulation:
- * - Start with current investment (or needed investment if goal view and investment is empty)
- * - Each year:
- *    - dividends = balance * (yieldUsed)
- *    - optional tax applied to dividends
- *    - if DRIP on, after-tax dividends reinvested (added to balance)
- *    - annual contribution added
- *    - yieldUsed increases by dividend growth rate each year (optional)
- */
-function simulateAdvanced({
-  startBalance,
-  yieldPct,
-  years,
-  divGrowthPct,
-  annualAdd,
-  dripOn,
-  taxRatePct
-}){
-  const rows = [];
-  let bal = Math.max(0, startBalance);
-  let y = Math.max(0, yieldPct) / 100;
-  const g = Math.max(0, divGrowthPct) / 100;
-  const add = Math.max(0, annualAdd);
-  const tax = (taxRatePct === null || taxRatePct === undefined || taxRatePct === "") ? null : Math.min(100, Math.max(0, Number(taxRatePct))) / 100;
-
-  for(let yr=1; yr<=years; yr++){
-    const start = bal;
-    const dividends = start * y;
-    const afterTax = (tax === null) ? dividends : dividends * (1 - tax);
-    const reinvest = dripOn ? afterTax : 0;
-    const end = start + reinvest + add;
-    const monthlyIncomeEnd = (end * y) / 12; // income based on end balance and current yield
-    rows.push({
-      year: yr,
-      start,
-      yieldUsed: y,
-      dividends,
-      afterTax,
-      contribution: add,
-      end,
-      monthlyIncomeEnd
-    });
-    bal = end;
-    y = y * (1 + g);
-  }
-  return rows;
-}
-
-function calculate(){
-  // Inputs
-  const inv = toNumber(el.investment.value);
-  const yPct = Number(el.yieldPct.value || 0);
-  const freq = el.frequency.value;
-
-  const goalMonthly = toNumber(el.goalMonthly.value);
-
-  // Estimate mode results based on inv
-  const base = baseIncomeFromInvestment(inv, yPct);
-
-  // Per-payment estimate
-  const divs = freqDivisor(freq);
-  const perPay = base.annual / divs;
-
-  // Goal view: investment needed for goalMonthly
-  let needed = null;
-  if(state.view === "goal" && goalMonthly > 0){
-    needed = investmentNeededForGoal(goalMonthly, yPct);
-  }
-
-  // Update simple outputs
-  el.monthlyOut.textContent = formatMoney(base.monthly, state.currency);
-  el.annualOut.textContent = formatMoney(base.annual, state.currency);
-  el.payOut.textContent = isFinite(perPay) ? formatMoney(perPay, state.currency) : "—";
-
-  if(state.view === "goal"){
-    el.needOut.textContent = (needed === null) ? "—" : (isFinite(needed) ? formatMoney(needed, state.currency) : "—");
-  } else {
-    el.needOut.textContent = "—";
-  }
-
-  // Advanced calculations & table
-  if(state.mode === "advanced"){
-    const dripOn = el.drip.value === "on";
-    const years = Math.max(1, Math.floor(Number(el.years.value || 1)));
-    const gPct = Number(el.divGrowth.value || 0);
-    const add = toNumber(el.annualAdd.value);
-    const tax = el.taxRate.value;
-
-    // Choose start balance:
-    // - If user is in goal view and investment is empty/0, use needed (if valid)
-    // - Otherwise use investment
-    let startBalance = inv;
-    if(state.view === "goal" && (startBalance <= 0) && needed !== null && isFinite(needed)){
-      startBalance = needed;
-    }
-
-    const rows = simulateAdvanced({
-      startBalance,
-      yieldPct: yPct,
-      years,
-      divGrowthPct: gPct,
-      annualAdd: add,
-      dripOn,
-      taxRatePct: tax
-    });
-
-    // Show table if requested
-    const show = el.showTable.value === "on";
-    el.tableWrap.style.display = show ? "block" : "none";
-    if(show){
-      el.simBody.innerHTML = rows.map(r => `
-        <tr>
-          <td>${r.year}</td>
-          <td>${formatMoney(r.start, state.currency)}</td>
-          <td>${formatPct(r.yieldUsed*100)}</td>
-          <td>${formatMoney(r.dividends, state.currency)}</td>
-          <td>${formatMoney(r.afterTax, state.currency)}</td>
-          <td>${formatMoney(r.contribution, state.currency)}</td>
-          <td>${formatMoney(r.end, state.currency)}</td>
-          <td>${formatMoney(r.monthlyIncomeEnd, state.currency)}</td>
-        </tr>
-      `).join("");
-    }
-
-    // In advanced mode, update headline results to reflect year 1 + end-of-horizon (optional)
-    // Keep it simple: show Year-1 monthly/annual (already shown from inv), but if user wants, they can see the table.
-    // You can later customize this to show "End of horizon monthly income" in one of the cards.
-  } else {
-    el.tableWrap.style.display = "none";
-  }
-}
-
-/* =========================
-   Reset + Presets + Listeners
-========================= */
-function resetAll(){
-  el.investment.value = "";
-  el.goalMonthly.value = "";
-  el.yieldPct.value = 5;
-  el.frequency.value = "quarterly";
-
-  // advanced defaults
-  el.drip.value = "off";
-  el.years.value = 10;
-  el.divGrowth.value = 3;
-  el.annualAdd.value = "";
-  el.taxRate.value = "";
-  el.showTable.value = "off";
-  el.tableWrap.style.display = "none";
-  calculate();
-}
-
-document.querySelectorAll("[data-preset]").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    el.yieldPct.value = Number(btn.getAttribute("data-preset"));
-    calculate();
-  });
-});
-
-// Toggles
-el.modeSimple.addEventListener("click", ()=>setMode("simple"));
-el.modeAdvanced.addEventListener("click", ()=>setMode("advanced"));
-el.curUSD.addEventListener("click", ()=>setCurrency("USD"));
-el.curCAD.addEventListener("click", ()=>setCurrency("CAD"));
-el.viewEstimate.addEventListener("click", ()=>setView("estimate"));
-el.viewGoal.addEventListener("click", ()=>setView("goal"));
-
-// Inputs auto-recalc
-[
-  el.investment, el.goalMonthly, el.yieldPct, el.frequency,
-  el.drip, el.years, el.divGrowth, el.annualAdd, el.taxRate, el.showTable
-].forEach(node=>{
-  node.addEventListener("input", calculate);
-  node.addEventListener("change", calculate);
-});
-
-el.btnCalculate.addEventListener("click", calculate);
-el.btnReset.addEventListener("click", resetAll);
-
-// Initialize
-updateBadge();
-resetAll();
-</script>
   <script>
-  // Shared Quick Nav loader
-  document.addEventListener('DOMContentLoaded', async () => {
-    const host = document.getElementById('quickNav');
-    if (!host) return;
-
-    try {
-      const res = await fetch('partials/quick-nav.html', { cache: 'no-cache' });
-      if (!res.ok) throw new Error('Nav load failed: ' + res.status);
-      host.innerHTML = await res.text();
-    } catch (e) {
-      // Fallback (no visible error, but keeps page usable)
-      host.innerHTML = `
-        <div class="content">
-          <h2>Quick navigation</h2>
-          <ul class="muted">
-            <li><a href="index.html">Main Dividend Income Calculator</a></li>
-          </ul>
-        </div>
-      `;
+  /* =========================
+     Helpers
+  ========================= */
+  function toNumber(val){
+    if(val === null || val === undefined) return 0;
+    const s = String(val).replace(/[^0-9.-]/g,'');
+    const n = Number(s);
+    return isFinite(n) ? n : 0;
+  }
+  function formatMoney(n, currency){
+    const sign = n < 0 ? "-" : "";
+    const abs = Math.abs(n);
+    const cur = currency === "CAD" ? "CAD" : "USD";
+    try{
+      return sign + new Intl.NumberFormat(undefined, { style:"currency", currency: cur, maximumFractionDigits: 2 }).format(abs);
+    }catch(e){
+      return sign + (cur === "CAD" ? "C$" : "$") + abs.toFixed(2);
     }
-  });
-</script>
+  }
+  function formatPct(n){
+    if(!isFinite(n)) return "—";
+    return n.toFixed(2) + "%";
+  }
+  function freqDivisor(freq){
+    switch(freq){
+      case "monthly": return 12;
+      case "quarterly": return 4;
+      case "semiannual": return 2;
+      case "annual": return 1;
+      default: return 4;
+    }
+  }
 
+  /* =========================
+     State
+  ========================= */
+  let state = {
+    mode: "simple",
+    currency: "USD",
+    view: "estimate"
+  };
+
+  /* =========================
+     Elements
+  ========================= */
+  const el = {
+    modeSimple: document.getElementById("modeSimple"),
+    modeAdvanced: document.getElementById("modeAdvanced"),
+    curUSD: document.getElementById("curUSD"),
+    curCAD: document.getElementById("curCAD"),
+    viewEstimate: document.getElementById("viewEstimate"),
+    viewGoal: document.getElementById("viewGoal"),
+    badge: document.getElementById("badgeContext"),
+
+    investment: document.getElementById("investment"),
+    goalMonthly: document.getElementById("goalMonthly"),
+    yieldPct: document.getElementById("yieldPct"),
+    frequency: document.getElementById("frequency"),
+    goalField: document.getElementById("goalField"),
+
+    advancedPanel: document.getElementById("advancedPanel"),
+    drip: document.getElementById("drip"),
+    years: document.getElementById("years"),
+    divGrowth: document.getElementById("divGrowth"),
+    annualAdd: document.getElementById("annualAdd"),
+    taxRate: document.getElementById("taxRate"),
+    showTable: document.getElementById("showTable"),
+
+    btnCalculate: document.getElementById("btnCalculate"),
+    btnReset: document.getElementById("btnReset"),
+
+    monthlyOut: document.getElementById("monthlyOut"),
+    annualOut: document.getElementById("annualOut"),
+    payOut: document.getElementById("payOut"),
+    needOut: document.getElementById("needOut"),
+
+    r4Label: document.getElementById("r4Label"),
+    needNote: document.getElementById("needNote"),
+
+    tableWrap: document.getElementById("tableWrap"),
+    simBody: document.getElementById("simBody"),
+  };
+
+  /* =========================
+     UI Toggles
+  ========================= */
+  function setActive(segButtons, activeBtn){
+    segButtons.forEach(b => b.classList.remove("active"));
+    activeBtn.classList.add("active");
+  }
+  function updateBadge(){
+    const m = state.mode === "advanced" ? "Advanced" : "Simple";
+    const v = state.view === "goal" ? "Goal" : "Estimate";
+    el.badge.textContent = `${m} • ${v} • ${state.currency}`;
+  }
+  function setMode(mode){
+    state.mode = mode;
+    setActive([el.modeSimple, el.modeAdvanced], mode === "simple" ? el.modeSimple : el.modeAdvanced);
+    el.modeSimple.setAttribute("aria-selected", mode === "simple" ? "true" : "false");
+    el.modeAdvanced.setAttribute("aria-selected", mode === "advanced" ? "true" : "false");
+
+    if(mode === "advanced") el.advancedPanel.classList.add("on");
+    else el.advancedPanel.classList.remove("on");
+
+    updateBadge();
+    calculate();
+  }
+  function setCurrency(cur){
+    state.currency = cur;
+    setActive([el.curUSD, el.curCAD], cur === "USD" ? el.curUSD : el.curCAD);
+    el.curUSD.setAttribute("aria-selected", cur === "USD" ? "true" : "false");
+    el.curCAD.setAttribute("aria-selected", cur === "CAD" ? "true" : "false");
+    updateBadge();
+    calculate();
+  }
+  function setView(view){
+    state.view = view;
+    setActive([el.viewEstimate, el.viewGoal], view === "estimate" ? el.viewEstimate : el.viewGoal);
+    el.viewEstimate.setAttribute("aria-selected", view === "estimate" ? "true" : "false");
+    el.viewGoal.setAttribute("aria-selected", view === "goal" ? "true" : "false");
+
+    el.goalField.style.display = (view === "goal") ? "block" : "none";
+    el.r4Label.textContent = "Investment Needed for Your Goal";
+    el.needNote.textContent = view === "goal" ? "Calculated from goal, yield, frequency." : "Only shown in Goal view.";
+    updateBadge();
+    calculate();
+  }
+
+  /* =========================
+     Core Calculations
+  ========================= */
+  function baseIncomeFromInvestment(investment, yieldPct){
+    const y = Math.max(0, yieldPct) / 100;
+    const annual = investment * y;
+    const monthly = annual / 12;
+    return { annual, monthly };
+  }
+
+  function investmentNeededForGoal(goalMonthly, yieldPct){
+    const y = Math.max(0, yieldPct) / 100;
+    if(y <= 0) return Infinity;
+    const annualGoal = goalMonthly * 12;
+    return annualGoal / y;
+  }
+
+  function simulateAdvanced({
+    startBalance,
+    yieldPct,
+    years,
+    divGrowthPct,
+    annualAdd,
+    dripOn,
+    taxRatePct
+  }){
+    const rows = [];
+    let bal = Math.max(0, startBalance);
+    let y = Math.max(0, yieldPct) / 100;
+    const g = Math.max(0, divGrowthPct) / 100;
+    const add = Math.max(0, annualAdd);
+    const tax = (taxRatePct === null || taxRatePct === undefined || taxRatePct === "") ? null : Math.min(100, Math.max(0, Number(taxRatePct))) / 100;
+
+    for(let yr=1; yr<=years; yr++){
+      const start = bal;
+      const dividends = start * y;
+      const afterTax = (tax === null) ? dividends : dividends * (1 - tax);
+      const reinvest = dripOn ? afterTax : 0;
+      const end = start + reinvest + add;
+      const monthlyIncomeEnd = (end * y) / 12;
+      rows.push({
+        year: yr,
+        start,
+        yieldUsed: y,
+        dividends,
+        afterTax,
+        contribution: add,
+        end,
+        monthlyIncomeEnd
+      });
+      bal = end;
+      y = y * (1 + g);
+    }
+    return rows;
+  }
+
+  function calculate(){
+    const inv = toNumber(el.investment.value);
+    const yPct = Number(el.yieldPct.value || 0);
+    const freq = el.frequency.value;
+    const goalMonthly = toNumber(el.goalMonthly.value);
+
+    const base = baseIncomeFromInvestment(inv, yPct);
+    const divs = freqDivisor(freq);
+    const perPay = base.annual / divs;
+
+    let needed = null;
+    if(state.view === "goal" && goalMonthly > 0){
+      needed = investmentNeededForGoal(goalMonthly, yPct);
+    }
+
+    el.monthlyOut.textContent = formatMoney(base.monthly, state.currency);
+    el.annualOut.textContent = formatMoney(base.annual, state.currency);
+    el.payOut.textContent = isFinite(perPay) ? formatMoney(perPay, state.currency) : "—";
+
+    if(state.view === "goal"){
+      el.needOut.textContent = (needed === null) ? "—" : (isFinite(needed) ? formatMoney(needed, state.currency) : "—");
+    } else {
+      el.needOut.textContent = "—";
+    }
+
+    if(state.mode === "advanced"){
+      const dripOn = el.drip.value === "on";
+      const years = Math.max(1, Math.floor(Number(el.years.value || 1)));
+      const gPct = Number(el.divGrowth.value || 0);
+      const add = toNumber(el.annualAdd.value);
+      const tax = el.taxRate.value;
+
+      let startBalance = inv;
+      if(state.view === "goal" && (startBalance <= 0) && needed !== null && isFinite(needed)){
+        startBalance = needed;
+      }
+
+      const rows = simulateAdvanced({
+        startBalance,
+        yieldPct: yPct,
+        years,
+        divGrowthPct: gPct,
+        annualAdd: add,
+        dripOn,
+        taxRatePct: tax
+      });
+
+      const show = el.showTable.value === "on";
+      el.tableWrap.style.display = show ? "block" : "none";
+      if(show){
+        el.simBody.innerHTML = rows.map(r => `
+          <tr>
+            <td>${r.year}</td>
+            <td>${formatMoney(r.start, state.currency)}</td>
+            <td>${formatPct(r.yieldUsed*100)}</td>
+            <td>${formatMoney(r.dividends, state.currency)}</td>
+            <td>${formatMoney(r.afterTax, state.currency)}</td>
+            <td>${formatMoney(r.contribution, state.currency)}</td>
+            <td>${formatMoney(r.end, state.currency)}</td>
+            <td>${formatMoney(r.monthlyIncomeEnd, state.currency)}</td>
+          </tr>
+        `).join("");
+      }
+    } else {
+      el.tableWrap.style.display = "none";
+    }
+  }
+
+  /* =========================
+     Reset + Presets + Listeners
+  ========================= */
+  function resetAll(){
+    el.investment.value = "";
+    el.goalMonthly.value = "";
+    el.yieldPct.value = 5;
+    el.frequency.value = "quarterly";
+
+    el.drip.value = "off";
+    el.years.value = 10;
+    el.divGrowth.value = 3;
+    el.annualAdd.value = "";
+    el.taxRate.value = "";
+    el.showTable.value = "off";
+    el.tableWrap.style.display = "none";
+    calculate();
+  }
+
+  document.querySelectorAll("[data-preset]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      el.yieldPct.value = Number(btn.getAttribute("data-preset"));
+      calculate();
+    });
+  });
+
+  el.modeSimple.addEventListener("click", ()=>setMode("simple"));
+  el.modeAdvanced.addEventListener("click", ()=>setMode("advanced"));
+  el.curUSD.addEventListener("click", ()=>setCurrency("USD"));
+  el.curCAD.addEventListener("click", ()=>setCurrency("CAD"));
+  el.viewEstimate.addEventListener("click", ()=>setView("estimate"));
+  el.viewGoal.addEventListener("click", ()=>setView("goal"));
+
+  [
+    el.investment, el.goalMonthly, el.yieldPct, el.frequency,
+    el.drip, el.years, el.divGrowth, el.annualAdd, el.taxRate, el.showTable
+  ].forEach(node=>{
+    node.addEventListener("input", calculate);
+    node.addEventListener("change", calculate);
+  });
+
+  el.btnCalculate.addEventListener("click", calculate);
+  el.btnReset.addEventListener("click", resetAll);
+
+  updateBadge();
+  resetAll();
+  </script>
+
+  <script>
+    // Shared Quick Nav loader (single source of truth: partials/quick-nav.html)
+    document.addEventListener('DOMContentLoaded', async () => {
+      const host = document.getElementById('quickNav');
+      if (!host) return;
+
+      try {
+        const res = await fetch('partials/quick-nav.html', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('Nav load failed: ' + res.status);
+        host.innerHTML = await res.text();
+      } catch (e) {
+        host.innerHTML = `
+          <div class="content">
+            <h2>Quick navigation</h2>
+            <ul class="muted">
+              <li><a href="index.html">Main Dividend Income Calculator</a></li>
+            </ul>
+          </div>
+        `;
+      }
+    });
+  </script>
 </body>
 </html>
-
