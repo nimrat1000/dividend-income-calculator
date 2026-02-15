@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!--
+    FILE NAME (repo root):
+    after-tax-dividend-income-calculator-canada.html
+
+    RULES FOLLOWED:
+    - Same visual system as other pages (brand/top/card/grid)
+    - CSP + anti-clickjacking
+    - Shared Quick Nav via partials/quick-nav.html
+    - External links live ONLY in the "External quick links" box (added rule)
+    - Outputs use textContent only
+  -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <meta http-equiv="Content-Security-Policy"
+        content="
+          default-src 'self';
+          script-src 'self' 'unsafe-inline';
+          style-src 'self' 'unsafe-inline';
+          img-src 'self' data:;
+          connect-src 'self';
+          base-uri 'none';
+          form-action 'none';
+          frame-ancestors 'none';
+        ">
+
+  <title>After-Tax Dividend Income Calculator (Canada)</title>
+  <meta name="description" content="Canada after-tax dividend income calculator. Estimate how much dividend/distribution income you keep after tax using simple planning inputs (marginal tax rate + account type). CAD focused." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://nimrat1000.github.io/dividend-income-calculator/after-tax-dividend-income-calculator-canada.html" />
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.14);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --shadow: 0 14px 40px rgba(0,0,0,0.35);
+      --r: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(92,124,250,0.22), transparent 60%),
+        radial-gradient(1100px 600px at 80% 20%, rgba(25,195,125,0.16), transparent 55%),
+        radial-gradient(900px 600px at 55% 90%, rgba(255,204,102,0.12), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    a{color:inherit}
+
+    .wrap{width:min(980px,92vw);margin:34px auto 70px}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+    .brand{
+      display:flex;gap:10px;align-items:center;padding:10px 12px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid var(--border);
+      border-radius:999px;
+      box-shadow:0 8px 22px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn{
+      display:inline-block;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,0.18);
+      background:rgba(92,124,250,0.22);
+      padding:10px 12px;
+      border-radius:12px;
+      box-shadow:0 12px 30px rgba(0,0,0,0.25);
+      transition:120ms ease;
+      font-size:13.5px;
+      white-space:nowrap;
+    }
+    .btn:hover{background:rgba(92,124,250,0.28)}
+    button.btn{cursor:pointer}
+    button.btn:active{transform:translateY(1px)}
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(14px);
+      overflow:hidden;
+    }
+    header{padding:20px 18px}
+    h1{margin:0;font-size:clamp(26px,3vw,40px);letter-spacing:-0.02em}
+    .sub{margin:10px 0 0;color:var(--muted);max-width:86ch}
+
+    .grid{display:grid;grid-template-columns:1fr .72fr;gap:16px;margin-top:16px}
+    @media(max-width:920px){.grid{grid-template-columns:1fr}}
+
+    .content{padding:16px 18px 18px}
+    h2{margin:0 0 10px;font-size:18px;letter-spacing:-0.01em}
+    .muted{color:var(--muted)}
+
+    .callout{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:16px;
+      padding:12px;
+      margin:12px 0;
+    }
+
+    label{display:block;font-size:12.5px;color:rgba(255,255,255,0.76);margin:10px 0 6px}
+    input,select{
+      width:100%;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.18);
+      background:rgba(0,0,0,0.22);
+      color:var(--text);
+      outline:none;
+    }
+    input:focus,select:focus{border-color:rgba(92,124,250,0.6)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media(max-width:560px){.row{grid-template-columns:1fr}}
+    .hint{font-size:12.5px;color:rgba(255,255,255,0.68);margin-top:8px}
+
+    .actions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .kpi{display:grid;gap:10px;margin-top:12px}
+    .k{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(0,0,0,0.18);
+    }
+    .k b{display:block;font-size:12.5px;color:rgba(255,255,255,0.72);margin-bottom:6px}
+    .k span{font-size:20px;letter-spacing:-0.01em}
+
+    details{
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.04);
+      border-radius:14px;
+      padding:10px 12px;
+      margin-top:10px;
+    }
+    summary{cursor:pointer;font-weight:650;list-style:none}
+    summary::-webkit-details-marker{display:none}
+
+    footer{margin-top:18px;text-align:center;color:rgba(255,255,255,0.55);font-size:12.5px}
+    .sticky{position:sticky;top:14px}
+
+    /* Quick nav styling */
+    aside .content h2 { margin-bottom: 10px; }
+    aside ul { margin: 10px 0 0 18px; padding: 0; }
+    aside li { margin: 6px 0; }
+    aside a { text-decoration: none; }
+    aside a:hover { text-decoration: underline; }
+
+    /* External quick links box (ONLY place for external links) */
+    .extBox{
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(0,0,0,0.18);
+      border-radius:16px;
+      padding:12px;
+      margin-top:12px;
+    }
+    .extBox h3{
+      margin:0 0 8px;
+      font-size:14px;
+      letter-spacing:-0.01em;
+      color:rgba(255,255,255,0.90);
+    }
+    .extBox p{margin:0 0 8px;color:var(--muted);font-size:13px}
+    .extBox ul{margin:8px 0 0 18px;padding:0}
+    .extBox li{margin:6px 0}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <strong>Dividend Income Tools</strong>
+        <span class="muted" style="font-size:12.5px;">Canada</span>
+      </div>
+      <a class="btn" href="index.html">Open Main Dividend Income Calculator</a>
+    </div>
+
+    <div class="card">
+      <header>
+        <h1>After-Tax Dividend Income Calculator (Canada)</h1>
+        <p class="sub">
+          Most people plan using headline yield… but what matters is what you <strong>keep</strong>.
+          This page estimates <strong>after-tax monthly and annual income</strong> for Canada using simple planning inputs:
+          investment amount, yield, account type, and a tax estimate.
+        </p>
+      </header>
+    </div>
+
+    <div class="grid">
+      <main class="card">
+        <div class="content">
+          <h2>After-tax dividend income estimator</h2>
+
+          <div class="callout">
+            <p class="muted" style="margin:0;">
+              Planning math (simple): <strong>Pre-tax annual</strong> = Investment × (Yield ÷ 100).<br />
+              <strong>Estimated tax</strong> = Pre-tax annual × (Tax rate ÷ 100) × (Taxable portion).<br />
+              <strong>After-tax annual</strong> = Pre-tax annual − Estimated tax.
+            </p>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="currency">Currency</label>
+              <select id="currency">
+                <option value="CAD" selected>CAD</option>
+                <option value="USD">USD</option>
+              </select>
+              <div class="hint">Canada page is mainly for CAD, but USD is included for convenience.</div>
+            </div>
+
+            <div>
+              <label for="investment">Investment amount</label>
+              <input id="investment" type="number" inputmode="decimal" min="0" step="0.01" value="10000" />
+              <div class="hint">Accepted range: 0 to 1,000,000,000</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="yieldPct">Dividend / distribution yield (annual %)</label>
+              <input id="yieldPct" type="number" inputmode="decimal" min="0" step="0.01" value="6" />
+              <div class="hint">This is a planning estimate. Real payouts can change.</div>
+            </div>
+
+            <div>
+              <label for="payoutFreq">Payout frequency (for display)</label>
+              <select id="payoutFreq">
+                <option value="monthly">Monthly</option>
+                <option value="quarterly" selected>Quarterly</option>
+                <option value="semiannual">Semi-Annual</option>
+                <option value="annual">Annual</option>
+              </select>
+              <div class="hint">Your yearly total stays the same; timing changes.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="accountType">Account type (Canada)</label>
+              <select id="accountType">
+                <option value="tfsa" selected>TFSA (tax-free)</option>
+                <option value="rrsp">RRSP / RRIF (tax-deferred)</option>
+                <option value="nonreg">Non-registered (taxable)</option>
+              </select>
+              <div class="hint">This is simplified planning logic (not tax advice).</div>
+            </div>
+
+            <div>
+              <label for="incomeType">Income type (non-registered planning)</label>
+              <select id="incomeType">
+                <option value="eligible" selected>Eligible dividends (Canadian companies)</option>
+                <option value="other">Other income / foreign / interest-like</option>
+                <option value="mixed">Mixed distributions (div + gains + ROC etc.)</option>
+              </select>
+              <div class="hint">Funds can pay distributions that aren’t “pure dividends”.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="taxRate">Your marginal tax rate estimate (%)</label>
+              <input id="taxRate" type="number" inputmode="decimal" min="0" max="100" step="0.01" value="30" />
+              <div class="hint">Example: 30 = 30% marginal rate. Use an estimate.</div>
+            </div>
+
+            <div>
+              <label for="taxablePortion">Taxable portion (%) (for “Mixed” only)</label>
+              <input id="taxablePortion" type="number" inputmode="decimal" min="0" max="100" step="0.01" value="70" />
+              <div class="hint">If 30% is ROC/non-taxable, taxable portion ≈ 70%.</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="calcBtn" class="btn" type="button">Calculate</button>
+            <a class="btn" href="calculate-monthly-dividend-income.html">Pre-Tax Income Calculator</a>
+            <a class="btn" href="monthly-dividend-yield-calculator.html">Yield Calculator</a>
+          </div>
+
+          <div class="kpi">
+            <div class="k">
+              <b>Pre-tax monthly income</b>
+              <span id="preMonthly">—</span>
+            </div>
+            <div class="k">
+              <b>After-tax monthly income (estimate)</b>
+              <span id="afterMonthly">—</span>
+            </div>
+            <div class="k">
+              <b>After-tax annual income (estimate)</b>
+              <span id="afterAnnual">—</span>
+            </div>
+            <div class="k">
+              <b>Estimated tax on distributions (annual)</b>
+              <span id="taxAnnual">—</span>
+            </div>
+            <div class="k">
+              <b>Estimated payout per payment (after-tax)</b>
+              <span id="afterPerPay">—</span>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>Important (Canada reality check)</strong>
+            <p class="muted" style="margin:8px 0 0;">
+              In non-registered accounts, ETF “distributions” can include dividends, capital gains, option premiums, and return of capital (ROC),
+              which can be taxed differently. This tool is a planning estimate to help you think in “what I keep”.
+            </p>
+          </div>
+
+          <h2>FAQ</h2>
+
+          <details open>
+            <summary>Why is TFSA showing higher after-tax income?</summary>
+            <p class="muted">
+              TFSA is tax-free, so this simple estimate treats tax as 0% on income. Real life can have edge cases (like withholding taxes),
+              but for planning, TFSA usually wins on “what you keep”.
+            </p>
+          </details>
+
+          <details>
+            <summary>What about RRSP / RRIF?</summary>
+            <p class="muted">
+              RRSP is tax-deferred. This page estimates the distribution “inside” the account without tax,
+              but you’ll pay tax when you withdraw. (Future roadmap: add a withdrawal-tax estimator.)
+            </p>
+          </details>
+
+          <details>
+            <summary>Eligible dividends vs “other income” — why it matters?</summary>
+            <p class="muted">
+              Eligible Canadian dividends often get a better tax treatment than interest/foreign income.
+              This tool uses a simple multiplier (not the full CRA dividend tax credit math) so you can plan quickly.
+            </p>
+          </details>
+
+          <!-- ROADMAP: Add an "Advanced Canada tax" mode later (provincial selection + dividend tax credit approximation). -->
+        </div>
+      </main>
+
+      <aside class="card sticky">
+        <div class="content">
+          <h2>Quick navigation</h2>
+          <div id="quickNav"></div>
+
+          <!-- EXTERNAL LINKS RULE: external links ONLY inside this box -->
+          <div class="extBox">
+            <h3>External quick links</h3>
+            <p>Official references (for your own verification):</p>
+            <ul class="muted">
+              <li><a href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/dividend-tax-credit.html" target="_blank" rel="noopener noreferrer">CRA: Dividend tax credit (Canada)</a></li>
+              <li><a href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account.html" target="_blank" rel="noopener noreferrer">CRA: TFSA basics</a></li>
+              <li><a href="https://www.canada.ca/en/revenue-agency/services/registered-plans-administrators/registered-retirement-savings-plans-registered-retirement-income-funds.html" target="_blank" rel="noopener noreferrer">CRA: RRSP / RRIF basics</a></li>
+            </ul>
+          </div>
+
+          <div class="callout" style="margin-top:12px;">
+            <strong>Related internal tools</strong>
+            <ul class="muted">
+              <li><a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a></li>
+              <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li>
+              <li><a href="how-much-to-invest-for-500-monthly-dividends.html">How Much to Invest for $500/Month</a></li>
+              <li><a href="how-much-to-invest-for-1000-monthly-dividends.html">How Much to Invest for $1,000/Month</a></li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Educational estimates only. This is not tax advice. Real tax outcomes depend on province, credits, and the distribution breakdown.
+    </footer>
+  </div>
+
+  <script>
+    function safeNumber(v){ const n = Number(v); return Number.isFinite(n) ? n : 0; }
+    function clamp(n,min,max){ return Math.min(Math.max(n,min),max); }
+    function fmtMoney(cur,n){
+      if(!Number.isFinite(n)) return '—';
+      return new Intl.NumberFormat(undefined,{style:'currency',currency:cur,maximumFractionDigits:2}).format(n);
+    }
+    function periodsPerYear(f){
+      if (f === 'monthly') return 12;
+      if (f === 'quarterly') return 4;
+      if (f === 'semiannual') return 2;
+      return 1;
+    }
+
+    // Simple planning multipliers (NOT CRA exact math)
+    // Goal: "good enough planning" for what-you-keep.
+    function effectiveTaxMultiplier(accountType, incomeType){
+      // returns a multiplier applied to (marginal tax rate) for taxable portion
+      if(accountType === 'tfsa') return 0;        // tax-free (planning)
+      if(accountType === 'rrsp') return 0;        // tax deferred inside account (planning)
+      // non-registered:
+      if(incomeType === 'eligible') return 0.70;  // eligible dividends often taxed lower than marginal (rough planning)
+      if(incomeType === 'other') return 1.00;     // treat like full marginal
+      return 0.85;                                // mixed: in between (planning)
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const currencyEl = document.getElementById('currency');
+      const investmentEl = document.getElementById('investment');
+      const yieldEl = document.getElementById('yieldPct');
+      const freqEl = document.getElementById('payoutFreq');
+      const accountEl = document.getElementById('accountType');
+      const incomeEl = document.getElementById('incomeType');
+      const taxRateEl = document.getElementById('taxRate');
+      const taxablePortionEl = document.getElementById('taxablePortion');
+      const calcBtn = document.getElementById('calcBtn');
+
+      const preMonthlyOut = document.getElementById('preMonthly');
+      const afterMonthlyOut = document.getElementById('afterMonthly');
+      const afterAnnualOut = document.getElementById('afterAnnual');
+      const taxAnnualOut = document.getElementById('taxAnnual');
+      const afterPerPayOut = document.getElementById('afterPerPay');
+
+      function calc(){
+        const cur = currencyEl.value;
+
+        const inv = clamp(safeNumber(investmentEl.value), 0, 1_000_000_000);
+        const y = clamp(safeNumber(yieldEl.value), 0, 100);
+
+        const accountType = accountEl.value;
+        const incomeType = incomeEl.value;
+
+        const marginal = clamp(safeNumber(taxRateEl.value), 0, 100) / 100;
+
+        // Taxable portion:
+        // - eligible/other assume 100% taxable (planning)
+        // - mixed uses user input (e.g., some ROC)
+        let taxablePortion = 1;
+        if(incomeType === 'mixed'){
+          taxablePortion = clamp(safeNumber(taxablePortionEl.value), 0, 100) / 100;
+        }
+
+        const preAnnual = inv * (y / 100);
+        const preMonthly = preAnnual / 12;
+
+        const taxMult = effectiveTaxMultiplier(accountType, incomeType);
+        const estTaxAnnual = preAnnual * marginal * taxMult * taxablePortion;
+
+        const afterAnnual = Math.max(0, preAnnual - estTaxAnnual);
+        const afterMonthly = afterAnnual / 12;
+
+        const ppy = periodsPerYear(freqEl.value);
+        const afterPerPay = afterAnnual / ppy;
+
+        // Output safely
+        preMonthlyOut.textContent = fmtMoney(cur, preMonthly);
+        afterMonthlyOut.textContent = fmtMoney(cur, afterMonthly);
+        afterAnnualOut.textContent = fmtMoney(cur, afterAnnual);
+        taxAnnualOut.textContent = fmtMoney(cur, estTaxAnnual);
+        afterPerPayOut.textContent = `${fmtMoney(cur, afterPerPay)} (${freqEl.value})`;
+
+        // UI: show/hide taxablePortion based on incomeType
+        taxablePortionEl.disabled = (incomeType !== 'mixed');
+      }
+
+      [currencyEl, investmentEl, yieldEl, freqEl, accountEl, incomeEl, taxRateEl, taxablePortionEl]
+        .forEach(el => el.addEventListener('input', calc));
+
+      if(calcBtn) calcBtn.addEventListener('click', calc);
+
+      calc();
+    });
+  </script>
+
+  <script>
+    // Shared Quick Nav loader (single source of truth)
+    document.addEventListener('DOMContentLoaded', async () => {
+      const host = document.getElementById('quickNav');
+      if (!host) return;
+
+      try {
+        const res = await fetch('partials/quick-nav.html', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('Nav load failed: ' + res.status);
+        host.innerHTML = await res.text();
+      } catch (e) {
+        host.innerHTML = `
+          <ul class="muted">
+            <li><a href="index.html">Main Dividend Income Calculator</a></li>
+            <li><a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a></li>
+            <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li>
+            <li><a href="how-much-to-invest-for-500-monthly-dividends.html">How Much to Invest for $500/Month</a></li>
+          </ul>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
