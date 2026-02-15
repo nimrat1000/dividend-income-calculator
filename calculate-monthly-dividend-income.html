@@ -1,25 +1,23 @@
-<!--
-FILE: calculate-monthly-dividend-income.html
-NOTE: Comments in this file are for YOU only. They do NOT show on the page.
--->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <!-- SECURITY: CSP + anti-clickjacking (frame-ancestors) -->
- <meta http-equiv="Content-Security-Policy"
-      content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline';
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' data:;
-        connect-src 'self';
-        base-uri 'none';
-        form-action 'none';
-        frame-ancestors 'none';
-      ">
+  <!-- SECURITY: CSP + anti-clickjacking (frame-ancestors)
+       NOTE: We allow inline scripts because this site uses inline JS on static GitHub Pages.
+       ROADMAP: If you later move JS into separate .js files, remove 'unsafe-inline' and update script-src accordingly. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="
+          default-src 'self';
+          script-src 'self' 'unsafe-inline';
+          style-src 'self' 'unsafe-inline';
+          img-src 'self' data:;
+          connect-src 'self';
+          base-uri 'none';
+          form-action 'none';
+          frame-ancestors 'none';
+        ">
 
   <title>Calculate Monthly Dividend Income (CAD & USD)</title>
   <meta name="description" content="Calculate monthly dividend income from investment amount and dividend yield. Includes annual income and payout-per-period estimates. Works for CAD & USD." />
@@ -28,11 +26,11 @@ NOTE: Comments in this file are for YOU only. They do NOT show on the page.
 
   <style>
     /* QUICK NAV standard styling */
-aside .content h2 { margin-bottom: 10px; }
-aside ul { margin: 10px 0 0 18px; padding: 0; }
-aside li { margin: 6px 0; }
-aside a { text-decoration: none; }
-aside a:hover { text-decoration: underline; }
+    aside .content h2 { margin-bottom: 10px; }
+    aside ul { margin: 10px 0 0 18px; padding: 0; }
+    aside li { margin: 6px 0; }
+    aside a { text-decoration: none; }
+    aside a:hover { text-decoration: underline; }
 
     :root{
       --bg:#0b1020;
@@ -66,8 +64,6 @@ aside a:hover { text-decoration: underline; }
       border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,0.25);
       backdrop-filter: blur(10px);
     }
-    button.btn{cursor:pointer}
-button.btn:active{transform:translateY(1px)}
 
     .btn{
       display:inline-block;text-decoration:none;border:1px solid rgba(255,255,255,0.18);
@@ -75,6 +71,9 @@ button.btn:active{transform:translateY(1px)}
       box-shadow:0 12px 30px rgba(0,0,0,0.25);transition:120ms ease;font-size:13.5px;white-space:nowrap
     }
     .btn:hover{background:rgba(92,124,250,0.28)}
+    button.btn{cursor:pointer}
+    button.btn:active{transform:translateY(1px)}
+
     .card{
       background:var(--card);border:1px solid var(--border);border-radius:var(--r);
       box-shadow:var(--shadow);backdrop-filter: blur(14px);overflow:hidden
@@ -99,7 +98,7 @@ button.btn:active{transform:translateY(1px)}
     input:focus,select:focus{border-color:rgba(92,124,250,0.6)}
     .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media(max-width:560px){.row{grid-template-columns:1fr}}
-    .kpi{display:grid;gap:10px;margin-top:10px}
+    .kpi{display:grid;gap:10px;margin-top:12px}
     .k{
       padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,0.12);
       background:rgba(0,0,0,0.18)
@@ -114,9 +113,15 @@ button.btn:active{transform:translateY(1px)}
     summary::-webkit-details-marker{display:none}
     footer{margin-top:18px;text-align:center;color:rgba(255,255,255,0.55);font-size:12.5px}
     .sticky{position:sticky;top:14px}
-    ul{margin:10px 0 0 18px;color:rgba(255,255,255,0.88)}
-    li{margin:6px 0}
     .hint{font-size:12.5px;color:rgba(255,255,255,0.68);margin-top:8px}
+
+    .actions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
   </style>
 </head>
 
@@ -186,17 +191,16 @@ button.btn:active{transform:translateY(1px)}
             </div>
           </div>
 
+          <div class="actions">
+            <button id="calcBtn" class="btn" type="button">Calculate</button>
+            <a class="btn" href="index.html">Advanced Calculator</a>
+          </div>
+
           <div class="kpi">
             <div class="k">
               <b>Estimated monthly dividend income</b>
               <span id="monthlyIncome">—</span>
             </div>
-            <!-- UI: Calculate button (keeps it obvious for users) -->
-<div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-  <button id="calcBtn" class="btn" type="button">Calculate</button>
-  <a class="btn" href="index.html">Advanced Calculator</a>
-</div>
-
             <div class="k">
               <b>Estimated annual dividend income</b>
               <span id="annualIncome">—</span>
@@ -241,122 +245,86 @@ button.btn:active{transform:translateY(1px)}
             </p>
           </details>
 
-          <!-- ROADMAP: Add a $500 and $2,000 goal guide links here once those pages are live. -->
+          <!-- ROADMAP: Add $500 and $2,000 goal pages here once live. -->
         </div>
       </main>
 
       <aside class="card sticky">
-        <!-- QUICK NAV (standard) -->
-<div class="content">
-  <h2>Quick navigation</h2>
-  <ul class="muted">
-    <!-- QUICK NAV INCLUDE (shared) -->
-<div id="quickNav"></div>
-<!-- 
-    <li><a href="index.html">Main Dividend Income Calculator</a></li>
-    <li><a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a></li>
-    <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li>
-    <li><a href="how-much-to-invest-for-1000-monthly-dividends.html">How Much to Invest for $1,000/Month</a></li>
-  </ul>
-    -->
-
-  <!-- ROADMAP: Add Dividend Growth Calculator link here once live -->
-  <!-- ROADMAP: Add DRIP (monthly contributions) link here once live -->
-</div>
-
+        <!-- QUICK NAV INCLUDE (shared): loads from partials/quick-nav.html -->
+        <div id="quickNav"></div>
       </aside>
     </div>
 
     <footer>
       Educational estimates only. Dividend yields and payouts can change.
     </footer>
-  </div><script>
-  // SECURITY/Reliability: strict numeric parsing + clamping to prevent UI abuse and NaN issues.
-  function safeNumber(value) {
-    const n = Number(value);
-    return Number.isFinite(n) ? n : 0;
-  }
-  function clamp(n, min, max) {
-    return Math.min(Math.max(n, min), max);
-  }
-  function fmtMoney(cur, n) {
-    if (!Number.isFinite(n)) return '—';
-    return new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: cur,
-      maximumFractionDigits: 2
-    }).format(n);
-  }
-  function periodsPerYear(f) {
-    if (f === 'monthly') return 12;
-    if (f === 'quarterly') return 4;
-    if (f === 'semiannual') return 2;
-    return 1;
-  }
+  </div>
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const currencyEl = document.getElementById('currency');
-    const investmentEl = document.getElementById('investment');
-    const yieldEl = document.getElementById('yield');
-    const freqEl = document.getElementById('freq');
-
-    const monthlyIncomeOut = document.getElementById('monthlyIncome');
-    const annualIncomeOut = document.getElementById('annualIncome');
-    const perPeriodOut = document.getElementById('perPeriod');
-
-    const calcBtn = document.getElementById('calcBtn');
-
-    function calc() {
-      const cur = currencyEl.value;
-
-      const inv = clamp(safeNumber(investmentEl.value), 0, 1_000_000_000);
-      const y = clamp(safeNumber(yieldEl.value), 0, 100);
-
-      const annual = inv * (y / 100);
-      const monthly = annual / 12;
-
-      const ppy = periodsPerYear(freqEl.value);
-      const perPeriod = annual / ppy;
-
-      // SECURITY: Output uses textContent only (prevents XSS).
-      monthlyIncomeOut.textContent = fmtMoney(cur, monthly);
-      annualIncomeOut.textContent = fmtMoney(cur, annual);
-      perPeriodOut.textContent = `${fmtMoney(cur, perPeriod)} (${freqEl.value})`;
+  <script>
+    // SECURITY/Reliability: strict numeric parsing + clamping to prevent UI abuse and NaN issues.
+    function safeNumber(value) {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : 0;
+    }
+    function clamp(n, min, max) {
+      return Math.min(Math.max(n, min), max);
+    }
+    function fmtMoney(cur, n) {
+      if (!Number.isFinite(n)) return '—';
+      return new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency: cur,
+        maximumFractionDigits: 2
+      }).format(n);
+    }
+    function periodsPerYear(f) {
+      if (f === 'monthly') return 12;
+      if (f === 'quarterly') return 4;
+      if (f === 'semiannual') return 2;
+      return 1;
     }
 
-    // Auto-calc on input
-    [currencyEl, investmentEl, yieldEl, freqEl].forEach(el => el.addEventListener('input', calc));
+    document.addEventListener('DOMContentLoaded', () => {
+      const currencyEl = document.getElementById('currency');
+      const investmentEl = document.getElementById('investment');
+      const yieldEl = document.getElementById('yield');
+      const freqEl = document.getElementById('freq');
 
-    // Manual button calc
-    if (calcBtn) calcBtn.addEventListener('click', calc);
+      const monthlyIncomeOut = document.getElementById('monthlyIncome');
+      const annualIncomeOut = document.getElementById('annualIncome');
+      const perPeriodOut = document.getElementById('perPeriod');
 
-    // Show results on first load
-    calc();
-  });
-</script>
-<script>
-  // Shared Quick Nav loader
-  document.addEventListener('DOMContentLoaded', async () => {
-    const host = document.getElementById('quickNav');
-    if (!host) return;
+      const calcBtn = document.getElementById('calcBtn');
 
-    try {
-      const res = await fetch('partials/quick-nav.html', { cache: 'no-cache' });
-      if (!res.ok) throw new Error('Nav load failed: ' + res.status);
-      host.innerHTML = await res.text();
-    } catch (e) {
-      // Fallback (no visible error, but keeps page usable)
-      host.innerHTML = `
-        <div class="content">
-          <h2>Quick navigation</h2>
-          <ul class="muted">
-            <li><a href="index.html">Main Dividend Income Calculator</a></li>
-          </ul>
-        </div>
-      `;
-    }
-  });
-</script>
+      function calc() {
+        const cur = currencyEl.value;
 
-</body>
-</html>
+        const inv = clamp(safeNumber(investmentEl.value), 0, 1_000_000_000);
+        const y = clamp(safeNumber(yieldEl.value), 0, 100);
+
+        const annual = inv * (y / 100);
+        const monthly = annual / 12;
+
+        const ppy = periodsPerYear(freqEl.value);
+        const perPeriod = annual / ppy;
+
+        // SECURITY: Output uses textContent only (prevents XSS).
+        monthlyIncomeOut.textContent = fmtMoney(cur, monthly);
+        annualIncomeOut.textContent = fmtMoney(cur, annual);
+        perPeriodOut.textContent = `${fmtMoney(cur, perPeriod)} (${freqEl.value})`;
+      }
+
+      // Auto-calc on input
+      [currencyEl, investmentEl, yieldEl, freqEl].forEach(el => el.addEventListener('input', calc));
+
+      // Manual button calc
+      if (calcBtn) calcBtn.addEventListener('click', calc);
+
+      // Show results on first load
+      calc();
+    });
+  </script>
+
+  <script>
+    // Shared Quick Nav loader (single source of truth)
+    // ROADMAP: If you later add a build system (Jekyll/layout
