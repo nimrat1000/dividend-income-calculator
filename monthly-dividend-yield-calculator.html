@@ -1,75 +1,153 @@
-<!--
-FILE NAME (repo root):
-monthly-dividend-yield-calculator.html
--->
 <!doctype html>
 <html lang="en">
 <head>
+  <!--
+    FILE NAME (repo root):
+    monthly-dividend-yield-calculator.html
+  -->
   <meta charset="utf-8" />
-  <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';">
-  <meta http-equiv="Content-Security-Policy"
-content="
-  default-src 'self';
-  script-src 'self';
-  style-src 'self' 'unsafe-inline';
-  img-src 'self' data:;
-  connect-src 'self';
-  base-uri 'none';
-  form-action 'none';
-">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- SECURITY: single CSP (no duplicates) + anti-clickjacking -->
+  <meta http-equiv="Content-Security-Policy"
+        content="
+          default-src 'self';
+          script-src 'self' 'unsafe-inline';
+          style-src 'self' 'unsafe-inline';
+          img-src 'self' data:;
+          connect-src 'self';
+          base-uri 'none';
+          form-action 'none';
+          frame-ancestors 'none';
+        ">
+
   <title>Monthly Dividend Yield Calculator (CAD & USD)</title>
   <meta name="description" content="Use this monthly dividend yield calculator to find dividend yield from investment amount and dividend income. Includes annual + monthly yield, examples, and links to our dividend income calculator." />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://nimrat1000.github.io/dividend-income-calculator/monthly-dividend-yield-calculator.html" />
 
   <style>
-    :root{--bg:#0b1020;--card:rgba(255,255,255,.06);--border:rgba(255,255,255,.14);--text:rgba(255,255,255,.92);--muted:rgba(255,255,255,.70);--shadow:0 14px 40px rgba(0,0,0,.35);--r:18px}
+    :root{
+      --bg:#0b1020;
+      --card:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.14);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --shadow:0 14px 40px rgba(0,0,0,.35);
+      --r:18px;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:
-      radial-gradient(1200px 700px at 20% 10%, rgba(92,124,250,.22), transparent 60%),
-      radial-gradient(1100px 600px at 80% 20%, rgba(25,195,125,.16), transparent 55%),
-      radial-gradient(900px 600px at 55% 90%, rgba(255,204,102,.12), transparent 60%),
-      var(--bg);color:var(--text);line-height:1.55}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(92,124,250,.22), transparent 60%),
+        radial-gradient(1100px 600px at 80% 20%, rgba(25,195,125,.16), transparent 55%),
+        radial-gradient(900px 600px at 55% 90%, rgba(255,204,102,.12), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
     a{color:inherit}
+
     .wrap{width:min(980px,92vw);margin:34px auto 70px}
     .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-    .brand{display:flex;gap:10px;align-items:center;padding:10px 12px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,.25);backdrop-filter:blur(10px)}
-    .btn{display:inline-block;text-decoration:none;border:1px solid rgba(255,255,255,.18);background:rgba(92,124,250,.22);padding:10px 12px;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.25);transition:120ms ease;font-size:13.5px;white-space:nowrap}
+    .brand{
+      display:flex;gap:10px;align-items:center;padding:10px 12px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      border-radius:999px;
+      box-shadow:0 8px 22px rgba(0,0,0,.25);
+      backdrop-filter:blur(10px)
+    }
+    .btn{
+      display:inline-block;text-decoration:none;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(92,124,250,.22);
+      padding:10px 12px;border-radius:12px;
+      box-shadow:0 12px 30px rgba(0,0,0,.25);
+      transition:120ms ease;font-size:13.5px;white-space:nowrap
+    }
     .btn:hover{background:rgba(92,124,250,.28)}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);backdrop-filter:blur(14px);overflow:hidden}
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      overflow:hidden
+    }
     header{padding:20px 18px}
     h1{margin:0;font-size:clamp(26px,3vw,40px);letter-spacing:-.02em}
     .sub{margin:10px 0 0;color:var(--muted);max-width:80ch}
+
     .grid{display:grid;grid-template-columns:1fr .72fr;gap:16px;margin-top:16px}
     @media(max-width:920px){.grid{grid-template-columns:1fr}}
+
     .content{padding:16px 18px 18px}
     h2{margin:0 0 10px;font-size:18px;letter-spacing:-.01em}
     .muted{color:var(--muted)}
-    .callout{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px;margin:12px 0}
+    .callout{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+      padding:12px;
+      margin:12px 0
+    }
+
     label{display:block;font-size:12.5px;color:rgba(255,255,255,.76);margin:10px 0 6px}
-    input,select{width:100%;padding:11px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.22);color:var(--text);outline:none}
+    input,select{
+      width:100%;
+      padding:11px 12px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(0,0,0,.22);
+      color:var(--text);
+      outline:none
+    }
     input:focus,select:focus{border-color:rgba(92,124,250,.6)}
     .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media(max-width:560px){.row{grid-template-columns:1fr}}
+
     .kpi{display:grid;gap:10px;margin-top:10px}
-    .k{padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.18)}
+    .k{
+      padding:12px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.18)
+    }
     .k b{display:block;font-size:12.5px;color:rgba(255,255,255,.72);margin-bottom:6px}
     .k span{font-size:20px;letter-spacing:-.01em}
-    details{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);border-radius:14px;padding:10px 12px;margin-top:10px}
+
+    details{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      border-radius:14px;
+      padding:10px 12px;
+      margin-top:10px
+    }
     summary{cursor:pointer;font-weight:650;list-style:none}
     summary::-webkit-details-marker{display:none}
+
     footer{margin-top:18px;text-align:center;color:rgba(255,255,255,.55);font-size:12.5px}
     .sticky{position:sticky;top:14px}
-    ul{margin:10px 0 0 18px;color:rgba(255,255,255,.88)}
-    li{margin:6px 0}
+
+    /* QUICK NAV styling (works for partial content too) */
+    #quickNav h2{margin:18px 0 10px;font-size:18px;letter-spacing:-.01em}
+    #quickNav ul{margin:10px 0 0 18px;padding:0}
+    #quickNav li{margin:6px 0}
+    #quickNav a{text-decoration:none}
+    #quickNav a:hover{text-decoration:underline}
   </style>
 </head>
+
 <body>
   <div class="wrap">
 
     <div class="top">
-      <div class="brand"><strong>Dividend Income Tools</strong><span class="muted" style="font-size:12.5px;">US & Canada</span></div>
+      <div class="brand">
+        <strong>Dividend Income Tools</strong>
+        <span class="muted" style="font-size:12.5px;">US & Canada</span>
+      </div>
       <a class="btn" href="index.html">Open Main Dividend Income Calculator</a>
     </div>
 
@@ -138,7 +216,7 @@ content="
             <strong>Next step:</strong>
             <p class="muted" style="margin:8px 0 0;">
               Want to calculate the actual <strong>monthly dividend income</strong> from a yield and investment?
-              Use the <a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a> page or the
+              Use <a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a> or the
               <a href="index.html">Main Dividend Income Calculator</a>.
             </p>
           </div>
@@ -147,11 +225,6 @@ content="
           <p class="muted">
             Dividend yield is a <strong>percentage</strong>. Dividend income is a <strong>cash amount</strong>.
             This page calculates yield from income; the income calculators do the opposite.
-          </p>
-          <p class="muted">
-           <!-- (Next roadmap page) Create: <code style="background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.14);padding:2px 6px;border-radius:8px;">dividend-yield-vs-dividend-income.html</code>
-            and interlink it here.
-            -->
           </p>
 
           <h2>FAQ</h2>
@@ -174,14 +247,21 @@ content="
 
       <aside class="card sticky">
         <div class="content">
-          <h2>Related pages</h2>
-          <ul class="muted">
-            <li><a href="index.html">Main Dividend Income Calculator</a></li>
-            <li><a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a></li>
-            <li><a href="how-much-to-invest-for-1000-monthly-dividends.html">How Much to Invest for $1,000/Month</a></li>
-          </ul>
+          <h2>Quick navigation</h2>
 
-          
+          <!-- QUICK NAV INCLUDE (shared): one place to edit for all pages -->
+          <div id="quickNav"></div>
+
+          <div class="callout" style="margin-top:14px;">
+            <strong>Related pages</strong>
+            <ul class="muted">
+              <li><a href="index.html">Main Dividend Income Calculator</a></li>
+              <li><a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a></li>
+              <li><a href="how-much-to-invest-for-1000-monthly-dividends.html">How Much to Invest for $1,000/Month</a></li>
+            </ul>
+          </div>
+
+          <!-- ROADMAP: Add "dividend-yield-vs-dividend-income.html" once created -->
         </div>
       </aside>
     </div>
@@ -235,7 +315,7 @@ content="
       const annualYield = inv > 0 ? (ann / inv) * 100 : NaN;
       const monthlyYield = isFinite(annualYield) ? (annualYield / 12) : NaN;
 
-      const per1000 = inv > 0 ? ( (ann/12) / inv ) * 1000 : NaN; // monthly income per $1,000 invested
+      const per1000 = inv > 0 ? (((ann/12) / inv) * 1000) : NaN;
 
       annualYieldEl.textContent = fmtPct(annualYield);
       monthlyYieldEl.textContent = fmtPct(monthlyYield);
@@ -246,5 +326,26 @@ content="
     syncAnnualFromMonthly();
     calc();
   </script>
+
+  <script>
+    // Shared Quick Nav loader (single source of truth: partials/quick-nav.html)
+    document.addEventListener('DOMContentLoaded', async () => {
+      const host = document.getElementById('quickNav');
+      if (!host) return;
+
+      try {
+        const res = await fetch('partials/quick-nav.html', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('Nav load failed: ' + res.status);
+        host.innerHTML = await res.text();
+      } catch (e) {
+        host.innerHTML = `
+          <ul class="muted">
+            <li><a href="index.html">Main Dividend Income Calculator</a></li>
+          </ul>
+        `;
+      }
+    });
+  </script>
 </body>
 </html>
+
