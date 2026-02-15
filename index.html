@@ -10,7 +10,18 @@
   <meta name="description" content="Estimate your monthly and annual dividend income with this free dividend income calculator for US and Canadian investors. Simple, fast, accurate, with optional advanced planning." />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://nimrat1000.github.io/dividend-income-calculator/" />
-
+ <!-- SECURITY: CSP + anti-clickjacking (frame-ancestors) -->
+ <meta http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        connect-src 'self';
+        base-uri 'none';
+        form-action 'none';
+        frame-ancestors 'none';
+      ">
   <!-- Open Graph (optional but nice) -->
   <meta property="og:title" content="Monthly Dividend Income Calculator (US & Canada)" />
   <meta property="og:description" content="Calculate monthly & annual dividend income. Simple mode + advanced planning options (DRIP, growth, contributions)." />
@@ -703,8 +714,12 @@
 Use these calculators to explore dividend yield and income scenarios in more detail:
 </p>
 <ul>
+  <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li> 
   <!--<li><a href="calculate-monthly-dividend-income.html">Calculate Monthly Dividend Income</a></li>-->
   <li><a href="monthly-dividend-yield-calculator.html">Monthly Dividend Yield Calculator</a></li>
+  <!-- QUICK NAV INCLUDE (shared) -->
+<div id="quickNav"></div>
+
 </ul>
 
 
@@ -1050,6 +1065,30 @@ el.btnReset.addEventListener("click", resetAll);
 updateBadge();
 resetAll();
 </script>
+  <script>
+  // Shared Quick Nav loader
+  document.addEventListener('DOMContentLoaded', async () => {
+    const host = document.getElementById('quickNav');
+    if (!host) return;
+
+    try {
+      const res = await fetch('partials/quick-nav.html', { cache: 'no-cache' });
+      if (!res.ok) throw new Error('Nav load failed: ' + res.status);
+      host.innerHTML = await res.text();
+    } catch (e) {
+      // Fallback (no visible error, but keeps page usable)
+      host.innerHTML = `
+        <div class="content">
+          <h2>Quick navigation</h2>
+          <ul class="muted">
+            <li><a href="index.html">Main Dividend Income Calculator</a></li>
+          </ul>
+        </div>
+      `;
+    }
+  });
+</script>
+
 </body>
 </html>
 
