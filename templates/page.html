@@ -5,8 +5,207 @@
 <meta name="description" content="Replace with an accurate description of this page.">
 <link rel="stylesheet" href="/dividend-income-calculator/assets/site-banners.css">
 <script src="/dividend-income-calculator/assets/site-banners.js" defer></script>
-<style>body{margin:0;background:#f8fafc;color:#152538;font:16px/1.6 system-ui,sans-serif}.wrap{max-width:1120px;margin:auto;padding:24px}h1{line-height:1.2}main{padding:24px;background:white;border-radius:16px}</style>
-</head><body><div class="wrap">
+
+<style>
+    :root{
+      --bg:#0b1020;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.085);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --border: rgba(255,255,255,0.14);
+      --shadow: 0 14px 40px rgba(0,0,0,0.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 700px at 20% 10%, rgba(92,124,250,0.22), transparent 60%),
+                  radial-gradient(1100px 600px at 80% 20%, rgba(25,195,125,0.16), transparent 55%),
+                  radial-gradient(900px 600px at 55% 90%, rgba(255,204,102,0.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height:1.55;
+    }
+    a{color: inherit}
+    .wrap{width:min(980px, 92vw); margin: 34px auto 70px;}
+    .topbar{
+      display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;
+      margin-bottom: 16px;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px);
+    }
+    .brand strong{letter-spacing:-0.01em}
+    .btn{
+      display:inline-block;
+      text-decoration:none;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(92,124,250,0.22);
+      padding: 10px 12px;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      transition: 120ms ease;
+      font-size: 13.5px;
+      white-space:nowrap;
+    }
+    .btn:hover{background: rgba(92,124,250,0.28);}
+    header{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 18px;
+      backdrop-filter: blur(14px);
+    }
+    h1{margin:0; font-size: clamp(26px, 3.0vw, 40px); letter-spacing:-0.02em;}
+    .sub{margin:10px 0 0; color: var(--muted); max-width: 80ch;}
+    .meta{
+      margin-top: 12px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      color: rgba(255,255,255,0.62);
+      font-size: 12.5px;
+    }
+    .pill{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 0.72fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 920px){
+      .grid{grid-template-columns:1fr;}
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      overflow:hidden;
+    }
+    .card .content{padding: 16px 18px 18px;}
+    h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing:-0.01em;
+    }
+    p{margin: 10px 0; color: rgba(255,255,255,0.88);}
+    .muted{color: var(--muted)}
+    .callout{
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 12px 12px;
+      margin: 12px 0;
+    }
+    .calcLink{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    code.inline{
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      border-radius: 16px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+      margin-top: 10px;
+    }
+    th, td{
+      padding: 10px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 13.5px;
+      text-align:right;
+      white-space:nowrap;
+    }
+    th{
+      background: rgba(0,0,0,0.34);
+      color: rgba(255,255,255,0.86);
+      font-weight: 650;
+    }
+    th:first-child, td:first-child{text-align:left;}
+    tr:last-child td{border-bottom:none;}
+    .note{
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.66);
+      margin-top: 8px;
+    }
+
+    details{
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-top: 10px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:650;
+      color: rgba(255,255,255,0.92);
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none;}
+    details p{color: var(--muted); margin: 10px 0 0; font-size: 13.5px;}
+
+    ul{margin: 10px 0 0 18px; color: rgba(255,255,255,0.88);}
+    li{margin: 6px 0;}
+    footer{
+      margin-top: 18px;
+      text-align:center;
+      color: rgba(255,255,255,0.55);
+      font-size: 12.5px;
+    }
+    .stickyBox{
+      position: sticky;
+      top: 14px;
+    }
+    .miniBtn{
+      display:block;
+      text-decoration:none;
+      text-align:center;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin-top: 10px;
+      transition: 120ms ease;
+      font-size: 13.5px;
+    }
+    .miniBtn:hover{background: rgba(255,255,255,0.10);}
+    .miniBtn.primary{background: rgba(92,124,250,0.22); border-color: rgba(92,124,250,0.35);}
+    .miniBtn.primary:hover{background: rgba(92,124,250,0.28);}
+  
+/* Article layout uses the same palette, cards and typography as the existing guide. */
+main{margin-top:16px;padding:20px 18px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(14px);overflow-wrap:anywhere}
+main h2{margin-top:28px}main h2:first-child{margin-top:0}h3{font-size:16px;letter-spacing:-.01em}
+.table-scroll{overflow-x:auto;margin:16px 0}caption{text-align:left;padding-bottom:10px;color:var(--muted);font-size:13px}
+th[scope="row"]{position:static;background:transparent;font-weight:500}
+a:hover{text-decoration:underline}a:focus-visible{outline:2px solid #a5b4fc;outline-offset:4px}
+@media(max-width:620px){.wrap{width:92vw;margin-top:24px}main{padding:16px}th,td{padding:10px 8px}}
+</style></head><body><div class="wrap">
 <header><h1>PAGE TITLE</h1><p>Write a useful introduction here.</p></header>
 <div class="site-promotions" data-site-promotions>
 <nav class="mft-network" aria-label="Explore our free tools">
