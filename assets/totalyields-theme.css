@@ -1,0 +1,117 @@
+/* TotalYields article-inspired light branding.
+   Shared visual layer only; calculator code, layout and SEO metadata stay untouched. */
+:root {
+  --bg:#f4f8fc;
+  --card:#ffffff;
+  --card2:#eef5ff;
+  --text:#14264b;
+  --muted:#53647e;
+  --border:#dce5f1;
+  --shadow:0 10px 34px rgba(20,38,75,.09);
+  --good:#08734d;
+  --warn:#936000;
+  --bad:#b02f3a;
+  color-scheme:light;
+}
+html { color-scheme:light; }
+body {
+  background:linear-gradient(125deg,#eaf4ff 0%,#f4f8fc 45%,#ffffff 79%,#fff4e6 100%) !important;
+  background-attachment:fixed !important;
+  color:var(--text);
+}
+h1,h2,h3,h4,strong { color:#14264b; }
+a { color:#1168dc; }
+a:hover { color:#074da8; }
+a:focus-visible, button:focus-visible, input:focus-visible,select:focus-visible {
+  outline:2px solid #1168dc;
+  outline-offset:2px;
+}
+/* One consistent brand, matching the existing article wordmark. */
+a.ty-wordmark {
+  display:inline-flex;align-items:baseline;
+  color:#14264b !important;text-decoration:none !important;
+  font:850 23px/1.16 system-ui,-apple-system,"Segoe UI",sans-serif;
+  letter-spacing:-.8px;white-space:nowrap;
+}
+a.ty-wordmark span {color:#1168dc;}
+a.ty-wordmark:hover {opacity:.87;}
+.wrap>.top .brand,.wrap>.topbar .brand {background:#ffffff;border-color:#dce5f1;box-shadow:0 5px 18px rgba(20,38,75,.055);}
+.wrap>header>.ty-wordmark {display:inline-flex;margin-bottom:14px;}
+header h1 {color:#14264b;}
+header p, main p, main ul, main li, .content p {color:#14264b;}
+.sub, .muted, .tiny, .hint, .helper, .note, .resultLabel, .resultNote,
+p.sub,header .sub,.meta,.mutedBlock,.toast {color:#53647e !important;}
+.card,main, .resultCard, .k, .callout, .extBox, details {
+  border-color:#dce5f1;
+}
+.card, .resultCard, .k, .callout, .extBox, details {
+  background-color:#ffffff;
+  box-shadow:0 4px 18px rgba(20,38,75,.035);
+}
+main:not(.card) { background-color:#ffffff; }
+.cardHead {background-color:#f7fbff;border-bottom-color:#dce5f1;}
+.resultCard,.k,.callout,.extBox,details {background-color:#f4f8fc;}
+.cardHead h2,.resultValue,.k span {color:#14264b;}
+.k b, .field label, label, .pill label {color:#53647e;}
+.pill,.badge,.seg,.meta .pill {
+  border-color:#dce5f1;
+  background:#ffffff;
+  color:#14264b;
+  box-shadow:none;
+}
+.seg {background:#f2f6fc;}
+.seg button {color:#53647e;}
+.seg button.active {background:#1168dc;color:#ffffff;box-shadow:0 2px 5px rgba(17,104,220,.15);}
+.seg button.active:hover {background:#075bc6;}
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),select,textarea {
+  color:#14264b;
+  background:#ffffff;
+  border:1px solid #cbd8e9;
+  box-shadow:none;
+}
+input::placeholder,textarea::placeholder{color:#6d7f96;}
+select option{color:#14264b;background:#ffffff;}
+input:focus,select:focus,textarea:focus {
+  border-color:#1168dc;
+  box-shadow:0 0 0 3px rgba(17,104,220,.13);
+}
+.btn,.miniBtn,button.btn,a.btn,a.miniBtn {
+  color:#14264b;
+  background:#ffffff;
+  border-color:#c9d9ef;
+  box-shadow:0 3px 12px rgba(20,38,75,.05);
+}
+.btn:hover,.miniBtn:hover {background:#eef5ff;border-color:#9bbce7;color:#0b4c98;}
+.btn.primary,.miniBtn.primary,button.btn.primary,a.btn.primary,a.miniBtn.primary {
+  background:#1168dc;
+  color:#ffffff;
+  border-color:#1168dc;
+}
+.btn.primary:hover,.miniBtn.primary:hover{background:#075bc6;border-color:#075bc6;color:#ffffff;}
+.btn.ghost{background:#ffffff;}
+.resultCard,.k {border-color:#dce5f1;}
+.advanced {border-top-color:#dce5f1;}
+.tableWrap,.table-scroll{border-color:#dce5f1;}
+table {background-color:#ffffff !important;border-color:#dce5f1;}
+th {background:#e9f3ff !important;color:#14264b !important;}
+td {color:#14264b;border-bottom-color:#e4edf6;}
+th,td {border-bottom-color:#dce5f1;}
+th[scope="row"] {background:transparent !important;}
+summary {color:#14264b !important;}
+details p {color:#53647e;}
+.extBox h3 {color:#14264b;}
+footer {color:#53647e !important;}
+code.inline {background:#eef5ff;border-color:#dce5f1;color:#14264b;}
+#quickNav a, aside a {color:#1168dc;}
+.mft-pages {border-color:#dce5f1;}
+.mft-pages a {color:#254967;}
+.mft-pages a[aria-current="page"]{color:#1168dc;background:#eef5ff;}
+/* Preserve spacious original controls and keep mobile text readable. */
+@media(max-width:620px) {
+ a.ty-wordmark{font-size:21px;}
+ body{background-attachment:scroll !important;}
+ .wrap>.top .brand,.wrap>.topbar .brand{max-width:100%;}
+}
+@media(prefers-reduced-motion:reduce) {
+ .btn,.miniBtn{transition:none;}
+}
